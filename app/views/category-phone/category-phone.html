@@ -1,0 +1,606 @@
+<aside class="sidebar">
+    <div class="sidebar-container">
+        <form class="sidebar-body">
+            <div class="form-group">
+                <label>Hãng</label>
+                <div isteven-multi-select helper-elements="" input-model="categoryPhoneVm.inputBrands" output-model="categoryPhoneVm.outputBrands" button-label="icon name" item-label="icon name" tick-property="ticked" on-item-click="categoryPhoneVm.onBrandSelect(data)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Tính năng</label>
+                <div isteven-multi-select helper-elements="" input-model="categoryPhoneVm.inputFeatures" output-model="categoryPhoneVm.outputFeatures" button-label="name" item-label="name" tick-property="ticked" on-item-click="categoryPhoneVm.onFeatureSelect(data)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Hệ điều hành</label>
+                <div isteven-multi-select helper-elements="" input-model="categoryPhoneVm.inputOSs" output-model="categoryPhoneVm.outputOSs" button-label="icon name" item-label="icon name" tick-property="ticked" on-item-click="categoryPhoneVm.onOSSelect(data)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Giá</label>
+                <rzslider rz-slider-model="categoryPhoneVm.priceSlider.min" rz-slider-high="categoryPhoneVm.priceSlider.max" rz-slider-options="categoryPhoneVm.priceSlider.options"></rzslider>
+            </div>
+            <div class="form-group">
+                <label>RAM</label>
+                <rzslider rz-slider-model="categoryPhoneVm.ramSizeSlider.min" rz-slider-high="categoryPhoneVm.ramSizeSlider.max" rz-slider-options="categoryPhoneVm.ramSizeSlider.options"></rzslider>
+            </div>
+            <div class="form-group">
+                <label>Bộ nhớ trong</label>
+                <rzslider rz-slider-model="categoryPhoneVm.internalMemSizeSlider.min" rz-slider-high="categoryPhoneVm.internalMemSizeSlider.max" rz-slider-options="categoryPhoneVm.internalMemSizeSlider.options"></rzslider>
+            </div>
+            <div class="form-group">
+                <label>Camera trước</label>
+                <rzslider rz-slider-model="categoryPhoneVm.frontCameraResSlider.min" rz-slider-high="categoryPhoneVm.frontCameraResSlider.max" rz-slider-options="categoryPhoneVm.frontCameraResSlider.options"></rzslider>
+            </div>
+            <div class="form-group">
+                <label>Camera sau</label>
+                <rzslider rz-slider-model="categoryPhoneVm.backCameraResSlider.min" rz-slider-high="categoryPhoneVm.backCameraResSlider.max" rz-slider-options="categoryPhoneVm.backCameraResSlider.options"></rzslider>
+            </div>
+            <div class="form-group">
+                <label>PIN</label>
+                <rzslider rz-slider-model="categoryPhoneVm.pinCapacitySlider.min" rz-slider-high="categoryPhoneVm.pinCapacitySlider.max" rz-slider-options="categoryPhoneVm.pinCapacitySlider.options"></rzslider>
+            </div>
+            <div class="form-group">
+                <label>Màn hình</label>
+                <rzslider rz-slider-model="categoryPhoneVm.screenSizeSlider.min" rz-slider-high="categoryPhoneVm.screenSizeSlider.max" rz-slider-options="categoryPhoneVm.screenSizeSlider.options"></rzslider>
+            </div>
+            <div class="form-group">
+                <label>SIM</label>
+                <div isteven-multi-select helper-elements="" input-model="categoryPhoneVm.inputNumOfSims" output-model="categoryPhoneVm.outputNumOfSims" button-label="name" item-label="name" tick-property="ticked" on-item-click="categoryPhoneVm.onNumOfSimsSelect(data)">
+                </div>
+            </div>
+        </form>
+        <div class="sidebar-footer text-center">
+            <button type="button" class="btn btn-primary" ng-click="categoryPhoneVm.resetFilter()">Mặc định</button>
+            <button id="close-sidebar-button" type="button" class="btn btn-danger">Đóng</button>
+        </div>
+    </div>
+</aside>
+<div class="container-fluid">
+    <form class="form-inline well margin-top-md">
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">
+                <div class="form-group">
+                    <button id="open-sidebar-button" class="btn btn-primary ">
+                        <i class="fa fa-filter"></i> Chọn theo tiêu chí
+                    </button>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-9 col-md-8">
+                <div class="form-group">
+                    <label class="margin-right-sm">Sắp xếp</label>
+                    <select class="form-control " ng-init="categoryPhoneVm.sortCriteria = categoryPhoneVm.sortCriteriaOptions[0]" ng-model="categoryPhoneVm.sortCriteria" ng-options="criteria.value for criteria in categoryPhoneVm.sortCriteriaOptions">
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <ul class="o-product-list">
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a ui-sref="productDetails.productId({ productId: 'iphone7-id' })">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                            <li class="label label-primary">Giảm giá</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/iphone-7-plus.jpg" alt="">
+                        <h3 class="o-product-card-title">IPhone 7 Plus</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>4.7'', RetinaHD</td>
+                            </tr>
+                            <tr>
+                                <td>HĐH:</td>
+                                <td>iOS 10</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Appla A9 2 nhân</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>2GB</td>
+                            </tr>
+                            <tr>
+                                <td>ROM:</td>
+                                <td>32GB</td>
+                            </tr>
+                            <tr>
+                                <td>Camera:</td>
+                                <td>12MP</td>
+                            </tr>
+                            <tr>
+                                <td>Selfie:</td>
+                                <td>5MP</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>1715 mAh</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a ui-sref="productDetails.productId({ productId: 'iphone7-id' })">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                            <li class="label label-primary">Giảm giá</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/iphone-7-plus.jpg" alt="">
+                        <h3 class="o-product-card-title">IPhone 7 Plus</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>4.7'', RetinaHD</td>
+                            </tr>
+                            <tr>
+                                <td>HĐH:</td>
+                                <td>iOS 10</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Appla A9 2 nhân</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>2GB</td>
+                            </tr>
+                            <tr>
+                                <td>ROM:</td>
+                                <td>32GB</td>
+                            </tr>
+                            <tr>
+                                <td>Camera:</td>
+                                <td>12MP</td>
+                            </tr>
+                            <tr>
+                                <td>Selfie:</td>
+                                <td>5MP</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>1715 mAh</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a ui-sref="productDetails.productId({ productId: 'iphone7-id' })">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/iphone-7-plus.jpg" alt="">
+                        <h3 class="o-product-card-title">IPhone 7 Plus</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>4.7'', RetinaHD</td>
+                            </tr>
+                            <tr>
+                                <td>HĐH:</td>
+                                <td>iOS 10</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Appla A9 2 nhân</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>2GB</td>
+                            </tr>
+                            <tr>
+                                <td>ROM:</td>
+                                <td>32GB</td>
+                            </tr>
+                            <tr>
+                                <td>Camera:</td>
+                                <td>12MP</td>
+                            </tr>
+                            <tr>
+                                <td>Selfie:</td>
+                                <td>5MP</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>1715 mAh</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a ui-sref="productDetails.productId({ productId: 'iphone7-id' })">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/iphone-7-plus.jpg" alt="">
+                        <h3 class="o-product-card-title">IPhone 7 Plus</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>4.7'', RetinaHD</td>
+                            </tr>
+                            <tr>
+                                <td>HĐH:</td>
+                                <td>iOS 10</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Appla A9 2 nhân</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>2GB</td>
+                            </tr>
+                            <tr>
+                                <td>ROM:</td>
+                                <td>32GB</td>
+                            </tr>
+                            <tr>
+                                <td>Camera:</td>
+                                <td>12MP</td>
+                            </tr>
+                            <tr>
+                                <td>Selfie:</td>
+                                <td>5MP</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>1715 mAh</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a ui-sref="productDetails.productId({ productId: 'iphone7-id' })">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/iphone-7-plus.jpg" alt="">
+                        <h3 class="o-product-card-title">IPhone 7 Plus</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>4.7'', RetinaHD</td>
+                            </tr>
+                            <tr>
+                                <td>HĐH:</td>
+                                <td>iOS 10</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Appla A9 2 nhân</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>2GB</td>
+                            </tr>
+                            <tr>
+                                <td>ROM:</td>
+                                <td>32GB</td>
+                            </tr>
+                            <tr>
+                                <td>Camera:</td>
+                                <td>12MP</td>
+                            </tr>
+                            <tr>
+                                <td>Selfie:</td>
+                                <td>5MP</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>1715 mAh</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a ui-sref="productDetails.productId({ productId: 'iphone7-id' })">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                            <li class="label label-primary">Giảm giá</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/iphone-7-plus.jpg" alt="">
+                        <h3 class="o-product-card-title">IPhone 7 Plus</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>4.7'', RetinaHD</td>
+                            </tr>
+                            <tr>
+                                <td>HĐH:</td>
+                                <td>iOS 10</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Appla A9 2 nhân</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>2GB</td>
+                            </tr>
+                            <tr>
+                                <td>ROM:</td>
+                                <td>32GB</td>
+                            </tr>
+                            <tr>
+                                <td>Camera:</td>
+                                <td>12MP</td>
+                            </tr>
+                            <tr>
+                                <td>Selfie:</td>
+                                <td>5MP</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>1715 mAh</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a ui-sref="productDetails.productId({ productId: 'iphone7-id' })">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                            <li class="label label-primary">Giảm giá</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/iphone-7-plus.jpg" alt="">
+                        <h3 class="o-product-card-title">IPhone 7 Plus</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>4.7'', RetinaHD</td>
+                            </tr>
+                            <tr>
+                                <td>HĐH:</td>
+                                <td>iOS 10</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Appla A9 2 nhân</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>2GB</td>
+                            </tr>
+                            <tr>
+                                <td>ROM:</td>
+                                <td>32GB</td>
+                            </tr>
+                            <tr>
+                                <td>Camera:</td>
+                                <td>12MP</td>
+                            </tr>
+                            <tr>
+                                <td>Selfie:</td>
+                                <td>5MP</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>1715 mAh</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a ui-sref="productDetails.productId({ productId: 'iphone7-id' })">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/iphone-7-plus.jpg" alt="">
+                        <h3 class="o-product-card-title">IPhone 7 Plus</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>4.7'', RetinaHD</td>
+                            </tr>
+                            <tr>
+                                <td>HĐH:</td>
+                                <td>iOS 10</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Appla A9 2 nhân</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>2GB</td>
+                            </tr>
+                            <tr>
+                                <td>ROM:</td>
+                                <td>32GB</td>
+                            </tr>
+                            <tr>
+                                <td>Camera:</td>
+                                <td>12MP</td>
+                            </tr>
+                            <tr>
+                                <td>Selfie:</td>
+                                <td>5MP</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>1715 mAh</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a ui-sref="productDetails.productId({ productId: 'iphone7-id' })">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/iphone-7-plus.jpg" alt="">
+                        <h3 class="o-product-card-title">IPhone 7 Plus</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>4.7'', RetinaHD</td>
+                            </tr>
+                            <tr>
+                                <td>HĐH:</td>
+                                <td>iOS 10</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Appla A9 2 nhân</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>2GB</td>
+                            </tr>
+                            <tr>
+                                <td>ROM:</td>
+                                <td>32GB</td>
+                            </tr>
+                            <tr>
+                                <td>Camera:</td>
+                                <td>12MP</td>
+                            </tr>
+                            <tr>
+                                <td>Selfie:</td>
+                                <td>5MP</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>1715 mAh</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a ui-sref="productDetails.productId({ productId: 'iphone7-id' })">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/iphone-7-plus.jpg" alt="">
+                        <h3 class="o-product-card-title">IPhone 7 Plus</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>4.7'', RetinaHD</td>
+                            </tr>
+                            <tr>
+                                <td>HĐH:</td>
+                                <td>iOS 10</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Appla A9 2 nhân</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>2GB</td>
+                            </tr>
+                            <tr>
+                                <td>ROM:</td>
+                                <td>32GB</td>
+                            </tr>
+                            <tr>
+                                <td>Camera:</td>
+                                <td>12MP</td>
+                            </tr>
+                            <tr>
+                                <td>Selfie:</td>
+                                <td>5MP</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>1715 mAh</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

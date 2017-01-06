@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html ng-app="orionEcommerceApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Orion Ecommerce</title>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bower_components/Bootflat/bootflat/css/bootflat.min.css">
+    <link rel="stylesheet" href="../bower_components/angular-toastr/dist/angular-toastr.min.css">
+    <link rel="stylesheet" href="../bower_components/components-font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../bower_components/angularjs-slider/dist/rzslider.min.css" />
+    <link rel="stylesheet" href="../libs/angular-multi-select/css/isteven-multi-select.css">
+    <link rel="stylesheet" href="../libs/ram-touch-spin/css/ramTouchSpin.css">
+    <link rel="stylesheet" href="../libs/bootstrap-social/bootstrap-social.css">
+    <link rel="stylesheet" href="styles/app.css">
+</head>
+
+<body ng-controller="IndexCtrl as indexVm">
+    <header>
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header pull-left">
+                    <a class="navbar-brand" ui-sref="home">
+                        <img src="img/logo.png" alt="Orion">
+                    </a>
+                </div>
+                <form id="navbar-search-form" class="navbar-form pull-left hidden-xs" ng-submit="indexVm.searchProduct()">
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="indexVm.productSearchQuery" placeholder="Tìm sản phẩm">
+                        <span class="input-group-btn">
+                        <button id="close-search-form-button" type="button" class="btn btn-danger visible-xs-inline">
+                            <i class="fa fa-remove"></i>
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                    </div>
+                </form>
+                <ul class="nav navbar-nav navbar-right pull-right">
+                    <li class="visible-xs">
+                        <button type="button" class="navbar-btn" data-toggle="collapse" data-target=".catalog-nav">
+                            <i class="fa fa-navicon fa-lg"></i>
+                        </button>
+                    </li>
+                    <li class="dropdown">
+                        <button class="navbar-btn dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-lg">
+                                <span class="hidden-xs">Tài khoản</span>
+                            </i>
+                            <b class="caret"></b>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li ng-if="indexVm.isAuthenticated() === false"><a data-toggle="modal" data-target="#login-modal">Đăng nhập</a></li>
+                            <li ng-if="indexVm.isAuthenticated() === false"><a data-toggle="modal" data-target="#register-modal">Đăng ký</a></li>
+                            <li ng-if="indexVm.isAuthenticated()"><a ui-sref="account.info"><i class="fa fa-address-card"></i>&nbsp; Quản lý tài khoản</a></li>
+                            <li ng-if="indexVm.isAuthenticated()"><a ui-sref="account.order"><i class="fa fa-truck"></i>&nbsp; &nbsp;Danh sách đơn hàng</a></li>
+                            <li ng-if="indexVm.isAuthenticated()" class="divider"></li>
+                            <li ng-if="indexVm.isAuthenticated()"><a ng-click="indexVm.logout()"><i class="fa fa-sign-out"></i>&nbsp; Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <button id="cart-button" type="button" class="navbar-btn" data-toggle="popover" data-placement="bottom">
+                            <i class="fa fa-shopping-cart fa-lg">
+                            <span class="hidden-xs">Giỏ hàng</span>
+                        </i>
+                        </button>
+                    </li>
+                    <li class="visible-xs">
+                        <button id="open-search-form-button" type="button" class="navbar-btn"><i class="fa fa-search fa-lg"></i></button>
+                    </li>
+                </ul>
+                <div id="o-navbar-catalog-container" class="collapse catalog-nav" style="clear: both;">
+                    <ul class="nav navbar-nav o-navbar-catalog">
+                        <li>
+                            <a ui-sref="category.phone">
+                                <img src="img/phone.png"> Điện thoại
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="category.tablet">
+                                <img src="img/tablet.png"> Máy tính bảng
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="category.laptop">
+                                <img src="img/laptop.png"> Laptop
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="category.accessory">
+                                <img src="img/headphones.png"> Phụ kiện
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <nav class="container-fluid o-catalog hidden-xs">
+            <div class="row no-gutter">
+                <li class="col-xs-12 col-sm-6 col-md-3">
+                    <a ui-sref-active="btn-info-active" ui-sref="category.phone" class="btn btn-secondary">
+                        <img src="img/phone.png" alt=""> Điện thoại
+                    </a>
+                </li>
+                <li class="col-xs-12 col-sm-6 col-md-3">
+                    <a ui-sref-active-eq="btn-info-active" ui-sref="category.tablet" class="btn btn-secondary">
+                        <img src="img/tablet.png" alt=""> Máy tính bảng
+                    </a>
+                </li>
+                <li class="col-xs-12 col-sm-6 col-md-3">
+                    <a ui-sref-active="btn-info-active" ui-sref="category.laptop" class="btn btn-secondary">
+                        <img src="img/laptop.png" alt=""> Laptop
+                    </a>
+                </li>
+                <li class="col-xs-12 col-sm-6 col-md-3">
+                    <a ui-sref-active="btn-info-active" ui-sref="category.accessory" class="btn btn-secondary">
+                        <img src="img/headphones.png" alt=""> Phụ kiện
+                    </a>
+                </li>
+            </div>
+        </nav>
+        <div id="cart-popover-wrapper" class="hidden">
+            <div class="o-popover-cart-container">
+                <div class="o-popover-cart-body">
+                    <ul class="o-popover-cart-product-list">
+                        <li class="o-popver-cart-product-card">
+                            <img src="img/product/iphone-7-plus.jpg">
+                            <div class="info">
+                                <h4>iPhone 7 plus iPhone 7 plus iPhone 7 </h4>
+                                <div class="price">20.000.000 đ</div>
+                            </div>
+                            <button type="button" class="btn btn-danger btn-sm pull-right">
+                                <i class="fa fa-remove"></i>
+                            </button>
+                        </li>
+                        <li class="o-popver-cart-product-card">
+                            <img src="img/product/iphone-7-plus.jpg">
+                            <div class="info">
+                                <h4>iPhone 7 plus iPhone 7 plus iPhone 7 </h4>
+                                <div class="price">20.000.000 đ</div>
+                            </div>
+                            <button type="button" class="btn btn-danger btn-sm pull-right">
+                                <i class="fa fa-remove"></i>
+                            </button>
+                        </li>
+                        <li class="o-popver-cart-product-card">
+                            <img src="img/product/iphone-7-plus.jpg">
+                            <div class="info">
+                                <h4>iPhone 7 plus iPhone 7 plus iPhone 7 </h4>
+                                <div class="price">20.000.000 đ</div>
+                            </div>
+                            <button type="button" class="btn btn-danger btn-sm pull-right">
+                                <i class="fa fa-remove"></i>
+                            </button>
+                        </li>
+                        <li class="o-popver-cart-product-card">
+                            <img src="img/product/iphone-7-plus.jpg">
+                            <div class="info">
+                                <h4>iPhone 7 plus iPhone 7 plus iPhone 7 </h4>
+                                <div class="price">20.000.000 đ</div>
+                            </div>
+                            <button type="button" class="btn btn-danger btn-sm pull-right">
+                                <i class="fa fa-remove"></i>
+                            </button>
+                        </li>
+                        <li class="o-popver-cart-product-card">
+                            <img src="img/product/iphone-7-plus.jpg">
+                            <div class="info">
+                                <h4>iPhone 7 plus iPhone 7 plus iPhone 7 </h4>
+                                <div class="price">20.000.000 đ</div>
+                            </div>
+                            <button type="button" class="btn btn-danger btn-sm pull-right">
+                                <i class="fa fa-remove"></i>
+                            </button>
+                        </li>
+                        <li class="o-popver-cart-product-card">
+                            <img src="img/product/iphone-7-plus.jpg">
+                            <div class="info">
+                                <h4>iPhone 7 plus iPhone 7 plus iPhone 7 </h4>
+                                <div class="price">20.000.000 đ</div>
+                            </div>
+                            <button type="button" class="btn btn-danger btn-sm pull-right">
+                                <i class="fa fa-remove"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="o-popover-cart-footer">
+                    <div class="h6 text-center">
+                        Tổng tiền: {{ 2000000 | number }} đ
+                    </div>
+                    <a ui-sref="checkout.cart" class="btn btn-info btn-block">
+                        <i class="fa fa-money"></i> Thanh toán
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <ui-view>
+        </ui-view>
+    </main>
+    <div class="modal fade" id="login-modal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <form ng-submit="indexVm.login()">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Đăng nhập</h4>
+                    </div>
+                    <div class="modal-body">
+                        <button class="btn btn-social btn-facebook btn-block margin-bottom-md">
+                            <span class="fa fa-facebook"></span> Đăng nhập Facebook
+                        </button>
+                        <div class="form-group">
+                            <label for="">Tên đăng nhập</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <input type="text" class="form-control" ng-model="indexVm.loginUsername" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Mật khẩu</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                                <input type="password" class="form-control" ng-model="indexVm.loginPassword" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-info btn-block">Đăng nhập</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="register-modal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Đăng ký</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="">Tên đăng nhập</label>
+                            <input type="text" class="form-control" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Mật khẩu</label>
+                            <input type="password" class="form-control" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Họ và tên</label>
+                            <input type="text" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-info btn-block">Tạo tài khoản</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer ng-cloak class="container-fluid text-center">
+        <img src="img/logo.png" width="100" class="margin-bottom-sm">
+        <br> Copyright &copy; 2016 - 2017 Orion
+        <a href="https://www.facebook.com"><img src="img/social/facebook.png" width="32px;"></a>
+    </footer>
+    <!-- vendors -->
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../libs/angular-locale/angular-locale_vi-vn.js"></script>
+    <script src="../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../bower_components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
+    <script src="../bower_components/angularjs-slider/dist/rzslider.min.js"></script>
+    <script src="../libs/angular-multi-select/js/isteven-multi-select.js"></script>
+    <script src="../libs/ram-touch-spin/js/ramTouchSpin.js"></script>
+    <!-- app -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/app.config.js"></script>
+    <script src="scripts/app.constant.js"></script>
+    <script src="scripts/navbar.js"></script>
+    <!-- controllers -->
+    <script src="index.controller.js"></script>
+    <script src="views/home/home.controller.js"></script>
+    <script src="views/account/account.controller.js"></script>
+    <script src="views/account/account-order/account-order.controller.js"></script>
+    <script src="views/account/account-info/account-info.controller.js"></script>
+    <script src="views/account/account-change-pass/account-change-pass.controller.js"></script>
+    <script src="views/checkout/checkout.controller.js"></script>
+    <script src="views/checkout-finish/checkout-finish.controller.js"></script>
+    <script src="views/checkout/checkout-cart/checkout-cart.controller.js"></script>
+    <script src="views/checkout/checkout-login/checkout-login.controller.js"></script>
+    <script src="views/checkout/checkout-address/checkout-address.controller.js"></script>
+    <script src="views/checkout/checkout-payment/checkout-payment.controller.js"></script>
+    <script src="views/product-search/product-search.controller.js"></script>
+    <script src="views/accessory-search/accessory-search.controller.js"></script>
+    <script src="views/category-phone/category-phone.controller.js"></script>
+    <script src="views/category-tablet/category-tablet.controller.js"></script>
+    <script src="views/category-laptop/category-laptop.controller.js"></script>
+    <script src="views/category-accessory/category-accessory.controller.js"></script>
+    <script src="views/category-case/category-case.controller.js"></script>
+    <script src="views/category-connector/category-connector.controller.js"></script>
+    <script src="views/category-headphone/category-headphone.controller.js"></script>
+    <script src="views/category-flashdisk/category-flashdisk.controller.js"></script>
+    <script src="views/category-mouse/category-mouse.controller.js"></script>
+    <script src="views/category-usb/category-usb.controller.js"></script>
+    <script src="views/product-details/product-details.controller.js"></script>
+    <!-- services -->
+    <script src="services/auth.service.js"></script>
+    <!-- filter -->
+</body>
+
+</html>

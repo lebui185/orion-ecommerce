@@ -1,0 +1,213 @@
+<div class="container-fluid margin-top-md">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="well">
+                <h3>iPhone 7 Plus 256GB</h3>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-4">
+                        <div class="o-product-details-image-group">
+                            <img class="o-product-details-feature-image margin-bottom-md" src="img/product/iphone-7/iphone-7-main.png" alt="">
+                            <ul class="o-product-details-image-button-group">
+                                <li>
+                                    <button type="button" class="btn btn-default btn-block" ng-click="productDetailsVm.openSliderImages('gold')">
+                                        <img src="img/product/iphone-7/iphone-7-vang-dong-main.png" alt="">
+                                    </button>
+                                    Vàng đồng
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-default btn-block" ng-click="productDetailsVm.openSliderImages('pink')">
+                                        <img src="img/product/iphone-7/iphone-7-vang-hong-main.png" alt="">
+                                    </button>
+                                    Vàng hồng
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-default btn-block" ng-click="productDetailsVm.openSliderImages('black')">
+                                        <img src="img/product/iphone-7/iphone-7-den-main.png" alt="">
+                                    </button>
+                                    Đen
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-default btn-block" ng-click="productDetailsVm.openSliderImages('box')">
+                                        <img src="img/box.png" alt="">
+                                    </button>
+                                    Mở hộp
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-3">
+                        <div class="h3 price margin-bottom-md">Giá: 20.000.000 đ</div>
+                        <div class="row margin-bottom-md no-gutter">
+                            <div class="col-xs-4" style="padding-left: 15px; padding-top: 6px;">
+                                <label>Số lượng</label>
+                            </div>
+                            <div class="col-xs-4">
+                                <input ram-touch-spin type="text" ng-model="item.quantity">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-info btn-block btn-xl">
+                            <span class="h5">THÊM VÀO GIỎ HÀNG</span>
+                        </button>
+                        <br>
+                        <button type="button" class="btn btn-warning btn-block btn-xl margin-bottom-md">
+                            <span class="h5">MUA NGAY</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-5">
+                        <div class="h5">Thông số kỹ thuật</div>
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <td>Màn hình</td>
+                                    <td>LED-backlit IPS LCD, 5.5", Retina HD</td>
+                                </tr>
+                                <tr>
+                                    <td>Hệ điều hành:</td>
+                                    <td>iOS 10</td>
+                                </tr>
+                                <tr>
+                                    <td>Camera sau</td>
+                                    <td>Hai camera 12 MP</td>
+                                </tr>
+                                <tr>
+                                    <td>Camera trước</td>
+                                    <td>7 MP</td>
+                                </tr>
+                                <tr>
+                                    <td>CPU</td>
+                                    <td>Apple A10 Fusion 4 nhân 64-bit</td>
+                                </tr>
+                                <tr>
+                                    <td>RAM</td>
+                                    <td>3 GB</td>
+                                </tr>
+                                <tr>
+                                    <td>Bộ nhớ trong</td>
+                                    <td>32 GB</td>
+                                </tr>
+                                <tr>
+                                    <td>Hỗ trợ thẻ nhớ</td>
+                                    <td>Không</td>
+                                </tr>
+                                <tr>
+                                    <td>Thẻ SIM</td>
+                                    <td>1 SIM, Nano SIM</td>
+                                </tr>
+                                <tr>
+                                    <td>Dung lượng pin</td>
+                                    <td>2900 mAh</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn-block btn btn-default" ng-click="productDetailsVm.openOverlayFullDetails()">Xem thông số chi tiết</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="well">
+                <h4>Phụ kiện liên quan</h4>
+                <div class="row">
+                    <div ng-repeat="product in productDetailsVm.relatedAccessories" class="col-xs-6 col-sm-3 col-md-2 margin-bottom-md">
+                        <div class="o-product-card-min">
+                            <a class="text-center">
+                                <img ng-src="{{ product.image }}" alt="">
+                                <h6 class="title">{{ product.title }}</h6>
+                                <div class="price">{{ product.price | number }} đ</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="well">
+                <h4>Sản phẩm liên quan</h4>
+                <div class="row">
+                    <div ng-repeat="product in productDetailsVm.relatedProducts" class="col-xs-6 col-sm-3 col-md-2 margin-bottom-md">
+                        <div class="o-product-card-min">
+                            <a class="text-center">
+                                <img ng-src="{{ product.image }}" alt="">
+                                <h6 class="title">{{ product.title }}</h6>
+                                <div class="price">{{ product.price | number }} đ</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="overlay" id="overlay-image-slider">
+    <div class="text-right margin-bottom-md">
+        <button type="button" class="btn btn-danger" ng-click="productDetailsVm.closeOverlaySlider()">&times; Đóng</button>
+    </div>
+    <div id="carousel-id" class="carousel slide center-block" data-ride="carousel" data-interval="false">
+        <ol class="carousel-indicators">
+            <li ng-repeat="image in productDetailsVm.sliderImages" data-slide-to="$index" ng-class="{ active: $first }"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="item" ng-class="{active: $first}" ng-repeat="image in productDetailsVm.sliderImages">
+                <img class="center-block" ng-src="{{ image }}">
+            </div>
+        </div>
+        <a class="left carousel-control" data-target="#carousel-id" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <a class="right carousel-control" data-target="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
+</div>
+<div class="overlay" id="overlay-full-details">
+    <div class="text-right margin-bottom-md">
+        <button type="button" class="btn btn-danger" ng-click="productDetailsVm.closeOverlayFullDetails()">&times; Đóng</button>
+    </div>
+    <div class="well full-details-container">
+        <h3>Còn nhiều lắm, bảng này tượng trưng thôi, tham khảo thegioididong</h3>
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                    <td>Màn hình</td>
+                    <td>LED-backlit IPS LCD, 5.5", Retina HD</td>
+                </tr>
+                <tr>
+                    <td>Hệ điều hành:</td>
+                    <td>iOS 10</td>
+                </tr>
+                <tr>
+                    <td>Camera sau</td>
+                    <td>Hai camera 12 MP</td>
+                </tr>
+                <tr>
+                    <td>Camera trước</td>
+                    <td>7 MP</td>
+                </tr>
+                <tr>
+                    <td>CPU</td>
+                    <td>Apple A10 Fusion 4 nhân 64-bit</td>
+                </tr>
+                <tr>
+                    <td>RAM</td>
+                    <td>3 GB</td>
+                </tr>
+                <tr>
+                    <td>Bộ nhớ trong</td>
+                    <td>32 GB</td>
+                </tr>
+                <tr>
+                    <td>Hỗ trợ thẻ nhớ</td>
+                    <td>Không</td>
+                </tr>
+                <tr>
+                    <td>Thẻ SIM</td>
+                    <td>1 SIM, Nano SIM</td>
+                </tr>
+                <tr>
+                    <td>Dung lượng pin</td>
+                    <td>2900 mAh</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

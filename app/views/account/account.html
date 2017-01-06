@@ -1,0 +1,24 @@
+<div class="container-fluid margin-top-md">
+    <div class="row">
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+            <div class="list-group">
+                <a ui-sref-active="active" ui-sref="account.order" class="list-group-item">
+                    <i class="fa fa-truck"></i> Danh sách đơn hàng
+                </a>
+                <a ui-sref-active="active" ui-sref="account.info" class="list-group-item">
+                    <i class="fa fa-user"></i> Thông tin cá nhân
+                </a>
+                <a ui-sref-active="active" ui-sref="account.changePass" class="list-group-item">
+                    <i class="fa fa-lock"></i> Đổi mật khẩu
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">
+            <div class="well">
+                <div class="container-fluid">
+                    <div ui-view></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

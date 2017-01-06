@@ -1,0 +1,88 @@
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <h3 class="panel-title">Phương thức thanh toán</h3>
+    </div>
+    <div class="panel-body">
+        <input type="radio" name="" id="input" value="" checked="checked"> Thanh toán tiền mặt khi nhận hàng
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Đơn hàng</h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Tên</th>
+                                <th>Số lượng</th>
+                                <th>Số tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tai nghe EP Awei ES979 Vi Gold</td>
+                                <td class="text-right">10</td>
+                                <td class="text-right">{{ 100000 | number }} đ</td>
+                            </tr>
+                            <tr>
+                                <td>Tai nghe EP Awei ES979 Vi Gold</td>
+                                <td class="text-right">10</td>
+                                <td class="text-right">{{ 100000 | number }} đ</td>
+                            </tr>
+                            <tr>
+                                <td>Tai nghe EP Awei ES979 Vi Gold</td>
+                                <td class="text-right">10</td>
+                                <td class="text-right">{{ 100000 | number }} đ</td>
+                            </tr>
+                            <tr>
+                                <td>Tai nghe EP Awei ES979 Vi Gold</td>
+                                <td class="text-right">10</td>
+                                <td class="text-right">{{ 100000 | number }} đ</td>
+                            </tr>
+                            <tr>
+                            	<td colspan="2"><strong>Tổng tiền</strong></td>
+                            	<td class="text-right price">{{ 400000 | number }} đ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Địa chỉ giao hàng</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td style="width: 80px;">Tên</td>
+                            <td>Bùi Diễm Trang</td>
+                        </tr>
+                        <tr>
+                            <td>Điện thoại</td>
+                            <td>01112233445</td>
+                        </tr>
+                        <tr>
+                            <td>Địa chỉ</td>
+                            <td>12345678 Đường Nào Đó, phường 1, Quận X, TP. Hồ Chí Minh</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">
+    </div>
+    <div class="col-xs-12 col-sm-offset-6 col-sm-6 col-md-offset-8 col-md-4">
+        <a ui-sref="checkoutFinish" class="btn btn-danger btn-block btn-xl">
+            <i class="fa fa-check-square-o fa-lg"></i> HOÀN TẤT ĐẶT HÀNG
+        </a>
+    </div>
+</div>

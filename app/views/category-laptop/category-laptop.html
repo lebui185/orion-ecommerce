@@ -1,0 +1,508 @@
+<aside class="sidebar">
+    <div class="sidebar-container">
+        <form class="sidebar-body">
+            <div class="form-group">
+                <label>Hãng</label>
+                <div isteven-multi-select helper-elements="" input-model="categoryLaptopVm.inputBrands" output-model="categoryLaptopVm.outputBrands" button-label="icon name" item-label="icon name" tick-property="ticked" on-item-click="categoryLaptopVm.onBrandSelect(data)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Tính năng</label>
+                <div isteven-multi-select helper-elements="" input-model="categoryLaptopVm.inputFeatures" output-model="categoryLaptopVm.outputFeatures" button-label="name" item-label="name" tick-property="ticked" on-item-click="categoryLaptopVm.onFeaturesSelect(data)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Giá</label>
+                <rzslider rz-slider-model="categoryLaptopVm.priceSlider.min" rz-slider-high="categoryLaptopVm.priceSlider.max" rz-slider-options="categoryLaptopVm.priceSlider.options"></rzslider>
+            </div>
+            <div class="form-group">
+                <label>RAM</label>
+                <rzslider rz-slider-model="categoryLaptopVm.ramSizeSlider.min" rz-slider-high="categoryLaptopVm.ramSizeSlider.max" rz-slider-options="categoryLaptopVm.ramSizeSlider.options"></rzslider>
+            </div>
+            <div class="form-group">
+                <label>Ổ cứng</label>
+                <rzslider rz-slider-model="categoryLaptopVm.hardDiskSizeSlider.min" rz-slider-high="categoryLaptopVm.hardDiskSizeSlider.max" rz-slider-options="categoryLaptopVm.hardDiskSizeSlider.options"></rzslider>
+            </div>
+            <div class="form-group">
+                <label>PIN</label>
+                <rzslider rz-slider-model="categoryLaptopVm.pinCapacitySlider.min" rz-slider-high="categoryLaptopVm.pinCapacitySlider.max" rz-slider-options="categoryLaptopVm.pinCapacitySlider.options"></rzslider>
+            </div>
+            <div class="form-group">
+                <label>Màn hình</label>
+                <rzslider rz-slider-model="categoryLaptopVm.screenSizeSlider.min" rz-slider-high="categoryLaptopVm.screenSizeSlider.max" rz-slider-options="categoryLaptopVm.screenSizeSlider.options"></rzslider>
+            </div>
+        </form>
+        <div class="sidebar-footer text-center">
+            <button type="button" class="btn btn-primary" ng-click="categoryLaptopVm.resetFilter()">Mặc định</button>
+            <button id="close-sidebar-button" type="button" class="btn btn-danger">Đóng</button>
+        </div>
+    </div>
+</aside>
+<div class="container-fluid">
+    <form class="form-inline well margin-top-md">
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">
+                <div class="form-group">
+                    <button id="open-sidebar-button" class="btn btn-primary ">
+                        <i class="fa fa-filter"></i> Chọn theo tiêu chí
+                    </button>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-9 col-md-8">
+                <div class="form-group">
+                    <label class="margin-right-sm">Sắp xếp</label>
+                    <select class="form-control " ng-init="categoryLaptopVm.sortCriteria = categoryLaptopVm.sortCriteriaOptions[0]" ng-model="categoryLaptopVm.sortCriteria" ng-options="criteria.value for criteria in categoryLaptopVm.sortCriteriaOptions">
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <ul class="o-product-list">
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a href="">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                            <li class="label label-primary">Giảm giá</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/asus-k40.jpg" alt="">
+                        <h3 class="o-product-card-title">Asus K40UB</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>14"</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Intel Core i5, 2.3 Ghz</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>4GB</td>
+                            </tr>
+                            <tr>
+                                <td>HDD:</td>
+                                <td>500 GB</td>
+                            </tr>
+                            <tr>
+                                <td>VGA:</td>
+                                <td>NVIDIA 940M, 2GB</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>3 cell</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a href="">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                            <li class="label label-primary">Giảm giá</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/asus-k40.jpg" alt="">
+                        <h3 class="o-product-card-title">Asus K40UB</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>14"</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Intel Core i5, 2.3 Ghz</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>4GB</td>
+                            </tr>
+                            <tr>
+                                <td>HDD:</td>
+                                <td>500 GB</td>
+                            </tr>
+                            <tr>
+                                <td>VGA:</td>
+                                <td>NVIDIA 940M, 2GB</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>3 cell</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a href="">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/asus-k40.jpg" alt="">
+                        <h3 class="o-product-card-title">Asus K40UB</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>14"</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Intel Core i5, 2.3 Ghz</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>4GB</td>
+                            </tr>
+                            <tr>
+                                <td>HDD:</td>
+                                <td>500 GB</td>
+                            </tr>
+                            <tr>
+                                <td>VGA:</td>
+                                <td>NVIDIA 940M, 2GB</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>3 cell</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a href="">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/asus-k40.jpg" alt="">
+                        <h3 class="o-product-card-title">Asus K40UB</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>14"</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Intel Core i5, 2.3 Ghz</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>4GB</td>
+                            </tr>
+                            <tr>
+                                <td>HDD:</td>
+                                <td>500 GB</td>
+                            </tr>
+                            <tr>
+                                <td>VGA:</td>
+                                <td>NVIDIA 940M, 2GB</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>3 cell</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a href="">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/asus-k40.jpg" alt="">
+                        <h3 class="o-product-card-title">Asus K40UB</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>14"</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Intel Core i5, 2.3 Ghz</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>4GB</td>
+                            </tr>
+                            <tr>
+                                <td>HDD:</td>
+                                <td>500 GB</td>
+                            </tr>
+                            <tr>
+                                <td>VGA:</td>
+                                <td>NVIDIA 940M, 2GB</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>3 cell</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a href="">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                            <li class="label label-primary">Giảm giá</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/asus-k40.jpg" alt="">
+                        <h3 class="o-product-card-title">Asus K40UB</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>14"</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Intel Core i5, 2.3 Ghz</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>4GB</td>
+                            </tr>
+                            <tr>
+                                <td>HDD:</td>
+                                <td>500 GB</td>
+                            </tr>
+                            <tr>
+                                <td>VGA:</td>
+                                <td>NVIDIA 940M, 2GB</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>3 cell</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a href="">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                            <li class="label label-primary">Giảm giá</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/asus-k40.jpg" alt="">
+                        <h3 class="o-product-card-title">Asus K40UB</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>14"</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Intel Core i5, 2.3 Ghz</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>4GB</td>
+                            </tr>
+                            <tr>
+                                <td>HDD:</td>
+                                <td>500 GB</td>
+                            </tr>
+                            <tr>
+                                <td>VGA:</td>
+                                <td>NVIDIA 940M, 2GB</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>3 cell</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a href="">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/asus-k40.jpg" alt="">
+                        <h3 class="o-product-card-title">Asus K40UB</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>14"</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Intel Core i5, 2.3 Ghz</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>4GB</td>
+                            </tr>
+                            <tr>
+                                <td>HDD:</td>
+                                <td>500 GB</td>
+                            </tr>
+                            <tr>
+                                <td>VGA:</td>
+                                <td>NVIDIA 940M, 2GB</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>3 cell</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a href="">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/asus-k40.jpg" alt="">
+                        <h3 class="o-product-card-title">Asus K40UB</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>14"</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Intel Core i5, 2.3 Ghz</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>4GB</td>
+                            </tr>
+                            <tr>
+                                <td>HDD:</td>
+                                <td>500 GB</td>
+                            </tr>
+                            <tr>
+                                <td>VGA:</td>
+                                <td>NVIDIA 940M, 2GB</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>3 cell</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="o-product-card well">
+                    <a href="">
+                        <ul class="o-product-card-addon">
+                            <li class="label label-danger">Hot</li>
+                            <li class="label label-info">Mới</li>
+                        </ul>
+                        <img class="o-product-card-img" src="img/product/asus-k40.jpg" alt="">
+                        <h3 class="o-product-card-title">Asus K40UB</h3>
+                        <table class="o-product-overview">
+                            <tr>
+                                <td>Màn hình:</td>
+                                <td>14"</td>
+                            </tr>
+                            <tr>
+                                <td>CPU:</td>
+                                <td>Intel Core i5, 2.3 Ghz</td>
+                            </tr>
+                            <tr>
+                                <td>RAM:</td>
+                                <td>4GB</td>
+                            </tr>
+                            <tr>
+                                <td>HDD:</td>
+                                <td>500 GB</td>
+                            </tr>
+                            <tr>
+                                <td>VGA:</td>
+                                <td>NVIDIA 940M, 2GB</td>
+                            </tr>
+                            <tr>
+                                <td>PIN:</td>
+                                <td>3 cell</td>
+                            </tr>
+                        </table>
+                    </a>
+                    <div class="text-right">
+                        <button class="btn btn-info">
+                            10.000.000 đ
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

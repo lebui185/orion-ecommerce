@@ -1,0 +1,20 @@
+<div class="container-fluid margin-top-md">
+    <div class="well">
+        <div class="container-fluid">
+            <div class="row no-gutter o-progress-tracker margin-bottom-lg">
+                <div ng-repeat="step in checkoutVm.steps" class="col-xs-3">
+                    <div class="o-progress-step" ng-class="{ 'complete': step.state == 'complete', 'active': step.state == 'active'}">
+                        <div class="o-progress-container">
+                            <div class="circle"></div>
+                            <div class="o-progress"></div>
+                        </div>
+                        <div class="o-progress-text">
+                            {{ step.name }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ui-view></div>
+    </div>
+</div>

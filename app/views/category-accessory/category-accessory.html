@@ -1,0 +1,209 @@
+<nav class="accessory-nav margin-bottom-md">
+    <li>
+        <a ui-sref-active="accessory-nav-active" ui-sref="category.accessory">
+            <img src="img/headphones.png" alt=""> Phụ kiện nổi bật
+        </a>
+    </li>
+    <li>
+        <a ui-sref-active="accessory-nav-active" ui-sref="category.accessory.flashdisk">
+            <img src="img/headphones.png" alt=""> Thẻ nhớ
+        </a>
+    </li>
+    <li>
+        <a ui-sref-active-eq="accessory-nav-active" ui-sref="category.accessory.headphone">
+            <img src="img/headphones.png" alt=""> Tai nghe
+        </a>
+    </li>
+    <li>
+        <a ui-sref-active="accessory-nav-active" ui-sref="category.accessory.connector">
+            <img src="img/headphones.png" alt=""> Cáp sạc
+        </a>
+    </li>
+    <li>
+        <a ui-sref-active="accessory-nav-active" ui-sref="category.accessory.case">
+            <img src="img/headphones.png" alt=""> Ốp lưng
+        </a>
+    </li>
+    <li>
+        <a ui-sref-active="accessory-nav-active" ui-sref="category.accessory.usb">
+            <img src="img/headphones.png" alt=""> USB
+        </a>
+    </li>
+    <li>
+        <a ui-sref-active="accessory-nav-active" ui-sref="category.accessory.mouse">
+            <img src="img/headphones.png" alt=""> Chuột
+        </a>
+    </li>
+</nav>
+<div class="container-fluid">
+    <div class="row margin-bottom-md">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <form ng-submit=categoryAccessoryVm.searchAccessory()>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Nhập tên thiết bị cần tìm phụ kiện" ng-model="categoryAccessoryVm.accessorySearchQuery">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<ui-view>
+    <div class="container-fluid">
+        <div class="row">
+            <ul class="o-product-list">
+                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="o-product-card well">
+                        <a href="">
+                            <ul class="o-product-card-addon">
+                                <li class="label label-danger">Hot</li>
+                                <li class="label label-info">Mới</li>
+                                <li class="label label-primary">Giảm giá</li>
+                            </ul>
+                            <img class="o-product-card-img" src="img/product/accessory/case/oppo-a39-soft-plastic.jpg" alt="">
+                            <h3 class="o-product-card-title">Ốp lưng Oppo A39 dựa dẻo ilike xám</h3>
+                        </a>
+                        <div class="text-right">
+                            <button class="btn btn-info">
+                                10.000.000 đ
+                                <i class="fa fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="o-product-card well">
+                        <a href="">
+                            <ul class="o-product-card-addon">
+                                <li class="label label-danger">Hot</li>
+                                <li class="label label-info">Mới</li>
+                                <li class="label label-primary">Giảm giá</li>
+                            </ul>
+                            <img class="o-product-card-img" src="img/product/accessory/connector/micro-usb-20cm.jpg" alt="">
+                            <h3 class="o-product-card-title">Cáp Micro USB 20cm Eco MU09-200</h3>
+                        </a>
+                        <div class="text-right">
+                            <button class="btn btn-info">
+                                10.000.000 đ
+                                <i class="fa fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="o-product-card well">
+                        <a href="">
+                            <ul class="o-product-card-addon">
+                                <li class="label label-danger">Hot</li>
+                            </ul>
+                            <img class="o-product-card-img" src="img/product/accessory/flashdisk/transcend-microsd-16gb.jpg" alt="">
+                            <h3 class="o-product-card-title">MicroSD 16GB Transcend Class 10</h3>
+                        </a>
+                        <div class="text-right">
+                            <button class="btn btn-info">
+                                10.000.000 đ
+                                <i class="fa fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="o-product-card well">
+                        <a href="">
+                            <ul class="o-product-card-addon">
+                                <li class="label label-danger">Hot</li>
+                                <li class="label label-info">Mới</li>
+                                <li class="label label-primary">Giảm giá</li>
+                            </ul>
+                            <img class="o-product-card-img" src="img/product/accessory/headphone/awei-gold-avatar.jpg" alt="">
+                            <h3 class="o-product-card-title">Tai nghe EP Awei ES979 Vi Gold</h3>
+                        </a>
+                        <div class="text-right">
+                            <button class="btn btn-info">
+                                10.000.000 đ
+                                <i class="fa fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="o-product-card well">
+                        <a href="">
+                            <ul class="o-product-card-addon">
+                                <li class="label label-danger">Hot</li>
+                                <li class="label label-info">Mới</li>
+                                <li class="label label-primary">Giảm giá</li>
+                            </ul>
+                            <img class="o-product-card-img" src="img/product/accessory/mouse/cliptec-trax-rzs.jpg" alt="">
+                            <h3 class="o-product-card-title">Chuột không dây Cliptec Trax RZS846</h3>
+                        </a>
+                        <div class="text-right">
+                            <button class="btn btn-info">
+                                10.000.000 đ
+                                <i class="fa fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="o-product-card well">
+                        <a href="">
+                            <ul class="o-product-card-addon">
+                                <li class="label label-danger">Hot</li>
+                            </ul>
+                            <img class="o-product-card-img" src="img/product/accessory/usb/ixpand-usb-otg-16gb.jpg" alt="">
+                            <h3 class="o-product-card-title">USB OTG 16GB Sandisk iXpand</h3>
+                        </a>
+                        <div class="text-right">
+                            <button class="btn btn-info">
+                                10.000.000 đ
+                                <i class="fa fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="o-product-card well">
+                        <a href="">
+                            <ul class="o-product-card-addon">
+                                <li class="label label-danger">Hot</li>
+                                <li class="label label-info">Mới</li>
+                                <li class="label label-primary">Giảm giá</li>
+                            </ul>
+                            <img class="o-product-card-img" src="img/product/accessory/headphone/awei-gold-avatar.jpg" alt="">
+                            <h3 class="o-product-card-title">Tai nghe EP Awei ES979 Vi Gold</h3>
+                        </a>
+                        <div class="text-right">
+                            <button class="btn btn-info">
+                                10.000.000 đ
+                                <i class="fa fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="o-product-card well">
+                        <a href="">
+                            <ul class="o-product-card-addon">
+                                <li class="label label-danger">Hot</li>
+                                <li class="label label-info">Mới</li>
+                                <li class="label label-primary">Giảm giá</li>
+                            </ul>
+                            <img class="o-product-card-img" src="img/product/accessory/case/oppo-a39-soft-plastic.jpg" alt="">
+                            <h3 class="o-product-card-title">Ốp lưng Oppo A39 dựa dẻo ilike xám</h3>
+                        </a>
+                        <div class="text-right">
+                            <button class="btn btn-info">
+                                10.000.000 đ
+                                <i class="fa fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</ui-view>
