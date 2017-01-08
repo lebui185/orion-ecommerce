@@ -54,150 +54,21 @@
 <ui-view>
     <div class="container-fluid">
         <div class="row">
+            <div class="spinner margin-top-lg" ng-if="categoryAccessoryVm.isGettingFeaturedAccessories"></div>
             <ul class="o-product-list">
-                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <li ng-repeat="product in categoryAccessoryVm.featuredAccessories" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="o-product-card well">
                         <a href="">
                             <ul class="o-product-card-addon">
-                                <li class="label label-danger">Hot</li>
-                                <li class="label label-info">Mới</li>
-                                <li class="label label-primary">Giảm giá</li>
+                                <li ng-repeat="tag in product.tags" class="margin-left-sm" ng-class="indexVm.getTagLabelClass(tag)">{{ tag.tagName }}
+                                </li>
                             </ul>
-                            <img class="o-product-card-img" src="img/product/accessory/case/oppo-a39-soft-plastic.jpg" alt="">
-                            <h3 class="o-product-card-title">Ốp lưng Oppo A39 dựa dẻo ilike xám</h3>
+                            <img class="o-product-card-img" ng-src="{{ product.media[0].link }}">
+                            <h3 class="o-product-card-title">{{ product.productName }}</h3>
                         </a>
                         <div class="text-right">
                             <button class="btn btn-info">
-                                10.000.000 đ
-                                <i class="fa fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                    </div>
-                </li>
-                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="o-product-card well">
-                        <a href="">
-                            <ul class="o-product-card-addon">
-                                <li class="label label-danger">Hot</li>
-                                <li class="label label-info">Mới</li>
-                                <li class="label label-primary">Giảm giá</li>
-                            </ul>
-                            <img class="o-product-card-img" src="img/product/accessory/connector/micro-usb-20cm.jpg" alt="">
-                            <h3 class="o-product-card-title">Cáp Micro USB 20cm Eco MU09-200</h3>
-                        </a>
-                        <div class="text-right">
-                            <button class="btn btn-info">
-                                10.000.000 đ
-                                <i class="fa fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                    </div>
-                </li>
-                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="o-product-card well">
-                        <a href="">
-                            <ul class="o-product-card-addon">
-                                <li class="label label-danger">Hot</li>
-                            </ul>
-                            <img class="o-product-card-img" src="img/product/accessory/flashdisk/transcend-microsd-16gb.jpg" alt="">
-                            <h3 class="o-product-card-title">MicroSD 16GB Transcend Class 10</h3>
-                        </a>
-                        <div class="text-right">
-                            <button class="btn btn-info">
-                                10.000.000 đ
-                                <i class="fa fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                    </div>
-                </li>
-                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="o-product-card well">
-                        <a href="">
-                            <ul class="o-product-card-addon">
-                                <li class="label label-danger">Hot</li>
-                                <li class="label label-info">Mới</li>
-                                <li class="label label-primary">Giảm giá</li>
-                            </ul>
-                            <img class="o-product-card-img" src="img/product/accessory/headphone/awei-gold-avatar.jpg" alt="">
-                            <h3 class="o-product-card-title">Tai nghe EP Awei ES979 Vi Gold</h3>
-                        </a>
-                        <div class="text-right">
-                            <button class="btn btn-info">
-                                10.000.000 đ
-                                <i class="fa fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                    </div>
-                </li>
-                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="o-product-card well">
-                        <a href="">
-                            <ul class="o-product-card-addon">
-                                <li class="label label-danger">Hot</li>
-                                <li class="label label-info">Mới</li>
-                                <li class="label label-primary">Giảm giá</li>
-                            </ul>
-                            <img class="o-product-card-img" src="img/product/accessory/mouse/cliptec-trax-rzs.jpg" alt="">
-                            <h3 class="o-product-card-title">Chuột không dây Cliptec Trax RZS846</h3>
-                        </a>
-                        <div class="text-right">
-                            <button class="btn btn-info">
-                                10.000.000 đ
-                                <i class="fa fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                    </div>
-                </li>
-                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="o-product-card well">
-                        <a href="">
-                            <ul class="o-product-card-addon">
-                                <li class="label label-danger">Hot</li>
-                            </ul>
-                            <img class="o-product-card-img" src="img/product/accessory/usb/ixpand-usb-otg-16gb.jpg" alt="">
-                            <h3 class="o-product-card-title">USB OTG 16GB Sandisk iXpand</h3>
-                        </a>
-                        <div class="text-right">
-                            <button class="btn btn-info">
-                                10.000.000 đ
-                                <i class="fa fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                    </div>
-                </li>
-                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="o-product-card well">
-                        <a href="">
-                            <ul class="o-product-card-addon">
-                                <li class="label label-danger">Hot</li>
-                                <li class="label label-info">Mới</li>
-                                <li class="label label-primary">Giảm giá</li>
-                            </ul>
-                            <img class="o-product-card-img" src="img/product/accessory/headphone/awei-gold-avatar.jpg" alt="">
-                            <h3 class="o-product-card-title">Tai nghe EP Awei ES979 Vi Gold</h3>
-                        </a>
-                        <div class="text-right">
-                            <button class="btn btn-info">
-                                10.000.000 đ
-                                <i class="fa fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                    </div>
-                </li>
-                <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="o-product-card well">
-                        <a href="">
-                            <ul class="o-product-card-addon">
-                                <li class="label label-danger">Hot</li>
-                                <li class="label label-info">Mới</li>
-                                <li class="label label-primary">Giảm giá</li>
-                            </ul>
-                            <img class="o-product-card-img" src="img/product/accessory/case/oppo-a39-soft-plastic.jpg" alt="">
-                            <h3 class="o-product-card-title">Ốp lưng Oppo A39 dựa dẻo ilike xám</h3>
-                        </a>
-                        <div class="text-right">
-                            <button class="btn btn-info">
-                                10.000.000 đ
+                                {{ product.price | number}} đ
                                 <i class="fa fa-shopping-cart"></i>
                             </button>
                         </div>

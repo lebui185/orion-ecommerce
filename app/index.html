@@ -47,7 +47,7 @@
                     <li class="dropdown">
                         <button class="navbar-btn dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-user fa-lg">
-                                <span class="hidden-xs">Tài khoản</span>
+                                <span class="hidden-xs">{{ indexVm.userName }}</span>
                             </i>
                             <b class="caret"></b>
                         </button>
@@ -64,6 +64,7 @@
                         <button id="cart-button" type="button" class="navbar-btn" data-toggle="popover" data-placement="bottom">
                             <i class="fa fa-shopping-cart fa-lg">
                             <span class="hidden-xs">Giỏ hàng</span>
+                            <span ng-cloak ng-if="indexVm.cartItemsCount > 0" class="badge">{{ indexVm.cartItemsCount }}</span>
                         </i>
                         </button>
                     </li>
@@ -125,93 +126,41 @@
             <div class="o-popover-cart-container">
                 <div class="o-popover-cart-body">
                     <ul class="o-popover-cart-product-list">
-                        <li class="o-popver-cart-product-card">
-                            <img src="img/product/iphone-7-plus.jpg">
+                        <li ng-repeat="product in indexVm.cartItems" class="o-popver-cart-product-card">
+                            <img ng-src="{{ product.media[0].link }}">
                             <div class="info">
-                                <h4>iPhone 7 plus iPhone 7 plus iPhone 7 </h4>
-                                <div class="price">20.000.000 đ</div>
+                                <h4>{{ product.productName }} </h4>
+                                <div class="price">{{ product.quantity }} x {{ product.price }} đ</div>
                             </div>
-                            <button type="button" class="btn btn-danger btn-sm pull-right">
-                                <i class="fa fa-remove"></i>
-                            </button>
-                        </li>
-                        <li class="o-popver-cart-product-card">
-                            <img src="img/product/iphone-7-plus.jpg">
-                            <div class="info">
-                                <h4>iPhone 7 plus iPhone 7 plus iPhone 7 </h4>
-                                <div class="price">20.000.000 đ</div>
-                            </div>
-                            <button type="button" class="btn btn-danger btn-sm pull-right">
-                                <i class="fa fa-remove"></i>
-                            </button>
-                        </li>
-                        <li class="o-popver-cart-product-card">
-                            <img src="img/product/iphone-7-plus.jpg">
-                            <div class="info">
-                                <h4>iPhone 7 plus iPhone 7 plus iPhone 7 </h4>
-                                <div class="price">20.000.000 đ</div>
-                            </div>
-                            <button type="button" class="btn btn-danger btn-sm pull-right">
-                                <i class="fa fa-remove"></i>
-                            </button>
-                        </li>
-                        <li class="o-popver-cart-product-card">
-                            <img src="img/product/iphone-7-plus.jpg">
-                            <div class="info">
-                                <h4>iPhone 7 plus iPhone 7 plus iPhone 7 </h4>
-                                <div class="price">20.000.000 đ</div>
-                            </div>
-                            <button type="button" class="btn btn-danger btn-sm pull-right">
-                                <i class="fa fa-remove"></i>
-                            </button>
-                        </li>
-                        <li class="o-popver-cart-product-card">
-                            <img src="img/product/iphone-7-plus.jpg">
-                            <div class="info">
-                                <h4>iPhone 7 plus iPhone 7 plus iPhone 7 </h4>
-                                <div class="price">20.000.000 đ</div>
-                            </div>
-                            <button type="button" class="btn btn-danger btn-sm pull-right">
-                                <i class="fa fa-remove"></i>
-                            </button>
-                        </li>
-                        <li class="o-popver-cart-product-card">
-                            <img src="img/product/iphone-7-plus.jpg">
-                            <div class="info">
-                                <h4>iPhone 7 plus iPhone 7 plus iPhone 7 </h4>
-                                <div class="price">20.000.000 đ</div>
-                            </div>
-                            <button type="button" class="btn btn-danger btn-sm pull-right">
-                                <i class="fa fa-remove"></i>
-                            </button>
                         </li>
                     </ul>
                 </div>
                 <div class="o-popover-cart-footer">
                     <div class="h6 text-center">
-                        Tổng tiền: {{ 2000000 | number }} đ
+                        Tổng tiền: {{ indexVm.totalPrice | number }} đ
                     </div>
                     <a ui-sref="checkout.cart" class="btn btn-info btn-block">
-                        <i class="fa fa-money"></i> Thanh toán
+                        <i class="fa fa-money"></i> Xem chi tiết và thanh toán
                     </a>
                 </div>
             </div>
         </div>
     </header>
     <main>
-        <ui-view>
-        </ui-view>
+        <div ui-view>
+            <div class="spinner margin-top-lg"></div>
+        <div>
     </main>
     <div class="modal fade" id="login-modal">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <form ng-submit="indexVm.login()">
+                <form ng-submit="indexVm.login(indexVm.loginUsername, indexVm.loginPassword)">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Đăng nhập</h4>
                     </div>
                     <div class="modal-body">
-                        <button class="btn btn-social btn-facebook btn-block margin-bottom-md">
+                        <button type="button" class="btn btn-social btn-facebook btn-block margin-bottom-md" ng-click="indexVm.loginFacebook()">
                             <span class="fa fa-facebook"></span> Đăng nhập Facebook
                         </button>
                         <div class="form-group">
@@ -278,6 +227,8 @@
     <script src="../bower_components/angular/angular.min.js"></script>
     <script src="../libs/angular-locale/angular-locale_vi-vn.js"></script>
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="../bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+    <script src="../bower_components/satellizer/dist/satellizer.min.js"></script>
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../bower_components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
@@ -317,6 +268,9 @@
     <script src="views/product-details/product-details.controller.js"></script>
     <!-- services -->
     <script src="services/auth.service.js"></script>
+    <script src="services/cart.service.js"></script>
+    <script src="services/user.service.js"></script>
+    <script src="services/product.service.js"></script>
     <!-- filter -->
 </body>
 

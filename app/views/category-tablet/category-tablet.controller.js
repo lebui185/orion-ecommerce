@@ -1,56 +1,130 @@
 angular.module('orionEcommerceApp')
-    .controller('CategoryTabletCtrl', function($filter, $scope, $timeout) {
+    .controller('CategoryTabletCtrl', function($filter, $timeout, $scope, productService, toastr, PRODUCT_LOAD_LIMIT) {
         var vm = this;
         var numberFilter = $filter('number');
-
-        // sort criteria
+        var currentOffset = 0;
+        vm.isGettingProducts = true;
+        vm.hasMoreProducts = false;
 
         vm.sortCriteriaOptions = [{
-            key: '0',
-            value: 'Giá thấp cao đến thấp'
+            key: '-price',
+            value: 'Giá cao đến thấp'
         }, {
-            key: '1',
-            value: 'Giá thấp thấp đến cao'
+            key: '+price',
+            value: 'Giá thấp đến cao'
         }, {
-            key: '2',
+            key: '-date',
             value: 'Mới nhất'
         }, {
-            key: '3',
+            key: '+date',
             value: 'Cũ nhất'
         }];
+
+        vm.params = {
+            offset: currentOffset,
+            limit: PRODUCT_LOAD_LIMIT,
+            sort: '-price',
+            minPrice: 500000,
+            maxPrice: 25000000,
+            minRam: 0,
+            maxRam: 8,
+            minInternalMemSize: 0,
+            maxInternalMemSize: 256,
+            minFrontCameraRes: 1,
+            maxFrontCameraRes: 8,
+            minBackCameraRes: 1,
+            maxBackCameraRes: 24,
+            minPinCapacity: 1000,
+            maxPinCapacity: 4000,
+            minScreenSize: 2.5,
+            maxScreenSize: 6
+        };
+
+        vm.getProducts = function() {
+            vm.isGettingProducts = true;
+            setMaker();
+            setOs();
+
+            if (currentOffset === 0) {
+                vm.tablets = [];
+            }
+
+            productService.getProducts('tablet', vm.params)
+                .then(function(res) {
+                    vm.isGettingProducts = false;
+                    var remaining = res.headers('remaining');
+                    currentOffset += res.data.length;
+
+                    for (var i = 0; i < res.data.length; i++) {
+                        vm.tablets.push(res.data[i]);
+                    }
+
+                    if (remaining !== '0') {
+                        vm.hasMoreProducts = true;
+                    } else {
+                        vm.hasMoreProducts = false;
+                    }
+
+                }, function(res) {
+                    vm.isGettingProducts = false;
+                    toastr.error('Không thể lấy danh sách máy tính bảng');
+                });
+        };
+
+        vm.sortCriteriaChange = function() {
+            currentOffset = 0;
+            vm.getProducts();
+        }
+
+        // preprocess function
+
+        function setMaker() {
+            if (vm.outputBrands.length > 0) {
+                vm.params.maker = '';
+
+                for (var i = 0; i < vm.outputBrands.length; i++) {
+                    vm.params.maker = vm.params.maker + vm.outputBrands[i].name;
+
+                    if (i < vm.outputBrands.length - 1) {
+                        vm.params.maker = vm.params.maker + ',';
+                    }
+                }
+            } else {
+                delete vm.params.maker;
+            }
+        }
+
+        function setOs() {
+            if (vm.outputOSs.length > 0) {
+                vm.params.os = '';
+
+                for (var i = 0; i < vm.outputOSs.length; i++) {
+                    vm.params.os = vm.params.os + vm.outputOSs[i].name;
+
+                    if (i < vm.outputOSs.length - 1) {
+                        vm.params.os = vm.params.os + ',';
+                    }
+                }
+            } else {
+                delete vm.params.os;
+            }
+
+        }
 
         // Brand select
 
         vm.inputBrands = [
             { icon: '<img src="img/brands/apple.png">', name: 'Apple', ticked: false },
-            { icon: '<img src="img/brands/asus.png">', name: 'Asus', ticked: false },
-            { icon: '<img src="img/brands/acer.jpg">', name: 'Acer', ticked: false },
             { icon: '<img src="img/brands/samsung.png">', name: 'Samsung', ticked: false },
+            { icon: '<img src="img/brands/sony.png">', name: 'Sony', ticked: false },
+            { icon: '<img src="img/brands/oppo.png">', name: 'Oppo', ticked: false }
         ];
 
         vm.outputBrands = [];
 
-
-        vm.onBrandSelect = function(data) {
-            console.log(vm.outputBrands);
-        };
-
-        // Price slider
-
-        vm.priceSlider = {
-            min: 500000,
-            max: 25000000,
-            options: {
-                floor: 500000,
-                ceil: 25000000,
-                step: 250000,
-                onEnd: function() {
-
-                },
-                translate: function(value) {
-                    return numberFilter(value) + ' đ';
-                }
-            }
+        vm.onBrandSelect = function() {
+            currentOffset = 0;
+            vm.getProducts();
         };
 
         // OS Select
@@ -62,21 +136,39 @@ angular.module('orionEcommerceApp')
         vm.outputOSs = [];
 
 
-        vm.onOSSelect = function(data) {
-            console.log(vm.outputOSs);
+        vm.onOSSelect = function() {
+            currentOffset = 0;
+            vm.getProducts();
+        };
+
+
+        // Price slider
+
+        vm.priceSlider = {
+            options: {
+                floor: 500000,
+                ceil: 25000000,
+                step: 250000,
+                onEnd: function() {
+                    currentOffset = 0;
+                    vm.getProducts();
+                },
+                translate: function(value) {
+                    return numberFilter(value) + ' đ';
+                }
+            }
         };
 
         // Screen size slider
         vm.screenSizeSlider = {
-            min: 4,
-            max: 13,
             options: {
-                floor: 4,
+                floor: 5,
                 ceil: 13,
                 step: 0.5,
                 precision: 1,
                 onEnd: function() {
-
+                    currentOffset = 0;
+                    vm.getProducts();
                 },
                 translate: function(value) {
                     return numberFilter(value) + '"';
@@ -86,14 +178,13 @@ angular.module('orionEcommerceApp')
 
         // RAM size slider
         vm.ramSizeSlider = {
-            min: 0,
-            max: 8,
             options: {
                 floor: 0,
-                ceil: 8,
+                ceil: 16,
                 step: 1,
                 onEnd: function() {
-
+                    currentOffset = 0;
+                    vm.getProducts();
                 },
                 translate: function(value) {
                     return numberFilter(value) + ' GB';
@@ -103,14 +194,13 @@ angular.module('orionEcommerceApp')
 
         // Internal memory size slider
         vm.internalMemSizeSlider = {
-            min: 0,
-            max: 256,
             options: {
                 floor: 0,
-                ceil: 256,
-                step: 2,
+                ceil: 512,
+                step: 32,
                 onEnd: function() {
-
+                    currentOffset = 0;
+                    vm.getProducts();
                 },
                 translate: function(value) {
                     return numberFilter(value) + ' GB';
@@ -120,14 +210,13 @@ angular.module('orionEcommerceApp')
 
         // Front camera res slider
         vm.frontCameraResSlider = {
-            min: 1,
-            max: 8,
             options: {
                 floor: 1,
                 ceil: 8,
                 step: 1,
                 onEnd: function() {
-
+                    currentOffset = 0;
+                    vm.getProducts();
                 },
                 translate: function(value) {
                     return numberFilter(value) + ' MP';
@@ -137,14 +226,13 @@ angular.module('orionEcommerceApp')
 
         // Back camera res slider
         vm.backCameraResSlider = {
-            min: 1,
-            max: 24,
             options: {
                 floor: 1,
                 ceil: 24,
                 step: 1,
                 onEnd: function() {
-
+                    currentOffset = 0;
+                    vm.getProducts();
                 },
                 translate: function(value) {
                     return numberFilter(value) + ' MP';
@@ -154,14 +242,13 @@ angular.module('orionEcommerceApp')
 
         // Pin capacity slider
         vm.pinCapacitySlider = {
-            min: 1000,
-            max: 8000,
             options: {
                 floor: 1000,
                 ceil: 8000,
-                step: 250,
+                step: 500,
                 onEnd: function() {
-
+                    currentOffset = 0;
+                    vm.getProducts();
                 },
                 translate: function(value) {
                     return numberFilter(value) + ' mAh';
@@ -169,21 +256,8 @@ angular.module('orionEcommerceApp')
             }
         };
 
-        // Features select
-        vm.inputFeatures = [
-            { name: 'Thực hiện cuộc gọi', ticked: false },
-            { name: 'Hỗ trợ USB On-The-Go', ticked: false }
-        ];
 
-        vm.outputFeatures = [];
-
-        vm.onFeatureSelect = function(data) {
-            console.log(vm.outputFeatures);
-        };
-
-        // private function
-
-        function _resetMultiSelect(input) {
+        function resetMultiSelect(input) {
             for (var i = 0; i < input.length; i++) {
                 input[i].ticked = false;
             }
@@ -192,37 +266,43 @@ angular.module('orionEcommerceApp')
         // main
 
         vm.resetFilter = function() {
-            _resetMultiSelect(vm.inputBrands);
-            _resetMultiSelect(vm.inputOSs);
-            _resetMultiSelect(vm.inputFeatures);
+            resetMultiSelect(vm.inputBrands);
+            vm.outputBrands = [];
+            resetMultiSelect(vm.inputOSs);
+            vm.outputOSs = [];
 
-            vm.priceSlider.min = vm.priceSlider.options.floor;
-            vm.priceSlider.max = vm.priceSlider.options.ceil;
+            vm.params.minPrice = vm.priceSlider.options.floor;
+            vm.params.maxPrice = vm.priceSlider.options.ceil;
 
-            vm.screenSizeSlider.min = vm.screenSizeSlider.options.floor;
-            vm.screenSizeSlider.max = vm.screenSizeSlider.options.ceil;
+            vm.params.minScreenSize = vm.screenSizeSlider.options.floor;
+            vm.params.maxScreenSize = vm.screenSizeSlider.options.ceil;
 
-            vm.ramSizeSlider.min = vm.ramSizeSlider.options.floor;
-            vm.ramSizeSlider.max = vm.ramSizeSlider.options.ceil;
+            vm.params.minRam = vm.ramSizeSlider.options.floor;
+            vm.params.maxRam = vm.ramSizeSlider.options.ceil;
 
-            vm.internalMemSizeSlider.min = vm.internalMemSizeSlider.options.floor;
-            vm.internalMemSizeSlider.max = vm.internalMemSizeSlider.options.ceil;
+            vm.params.minInternalMemSize = vm.internalMemSizeSlider.options.floor;
+            vm.params.maxInternalMemSize = vm.internalMemSizeSlider.options.ceil;
 
-            vm.frontCameraResSlider.min = vm.frontCameraResSlider.options.floor;
-            vm.frontCameraResSlider.max = vm.frontCameraResSlider.options.ceil;
+            vm.params.minFrontCameraRes = vm.frontCameraResSlider.options.floor;
+            vm.params.maxFrontCameraRes = vm.frontCameraResSlider.options.ceil;
 
-            vm.backCameraResSlider.min = vm.backCameraResSlider.options.floor;
-            vm.backCameraResSlider.max = vm.backCameraResSlider.options.ceil;
+            vm.params.minBackCameraRes = vm.backCameraResSlider.options.floor;
+            vm.params.maxBackCameraRes = vm.backCameraResSlider.options.ceil;
 
-            vm.pinCapacitySlider.min = vm.pinCapacitySlider.options.floor;
-            vm.pinCapacitySlider.max = vm.pinCapacitySlider.options.ceil;
+            vm.params.minPinCapacity = vm.pinCapacitySlider.options.floor;
+            vm.params.maxPinCapacity = vm.pinCapacitySlider.options.ceil;
+
+            currentOffset = 0;
+            vm.getProducts();
         };
+
+        vm.resetFilter();
+        vm.getProducts();
 
         // DOM sidebar
         var openSidebarButton = document.getElementById('open-sidebar-button');
         var closeSidebarButton = document.getElementById('close-sidebar-button');
         var sidebar = document.querySelector(".sidebar");
-        var sidebarBody = sidebar.querySelector('.sidebar-body');
 
         vm.refreshSlider = function() {
             $timeout(function() {

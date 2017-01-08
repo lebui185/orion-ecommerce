@@ -1,32 +1,19 @@
 angular.module('orionEcommerceApp')
-    .controller('ProductSearchCtrl', function($stateParams) {
+    .controller('ProductSearchCtrl', function($stateParams, productService, toastr) {
         var vm = this;
 
         vm.query = $stateParams.query;
+        vm.result = null;
 
-        vm.results = [{
-            id: 'PK001',
-            image: 'img/product/iphone-6s-plus.png',
-            title: 'iPhone 6s Plus 128GB',
-            price: 19000000,
-            tags: ['Hot', 'Giảm giá']
-        }, {
-            id: 'PK001',
-            image: 'img/product/iphone-6s-plus.png',
-            title: 'iPhone 6s Plus 128GB',
-            price: 19000000,
-            tags: ['Hot', 'Giảm giá', 'Mới']
-        }, {
-            id: 'PK001',
-            image: 'img/product/iphone-6s-plus.png',
-            title: 'iPhone 6s Plus 128GB',
-            price: 19000000,
-            tags: ['Hot', 'Giảm giá', 'Mới']
-        }, {
-            id: 'PK001',
-            image: 'img/product/iphone-6s-plus.png',
-            title: 'iPhone 6s Plus 128GB',
-            price: 19000000,
-            tags: ['Hot', 'Giảm giá', 'Mới']
-        }];
+        vm.isSearching = true;
+
+        productService.searchProduct(vm.query)
+            .then(function(res) {
+                vm.isSearching = false;
+                vm.results = res.data;
+
+            }, function(res) {
+                vm.isSearching = false;
+                toastr.error('Không thể lấy sản phẩm liên quan');
+            });
     });

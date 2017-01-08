@@ -1,25 +1,29 @@
 <div class="container-fluid margin-top-md">
-    <h4>Có {{ productSearchVm.results.length }} kết quả tìm kiếm cho từ khóa "{{ productSearchVm.query }}"</h4>
-    <div class="row">
-        <ul class="o-product-list">
-            <li ng-repeat="product in productSearchVm.results" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="o-product-card well">
-                    <a href="">
-                        <ul class="o-product-card-addon">
-                            <li ng-repeat="tag in product.tags" class="margin-left-sm" ng-class="indexVm.getTagLabelClass(tag)">{{ tag }}</li>
-                        </ul>
-                        <img class="o-product-card-img" ng-src="{{ product.image }}" alt="">
-                        <h3 class="o-product-card-title">{{ product.title }}</h3>
-                    </a>
-                    <div class="text-right">
-                        <button class="btn btn-info">
-                            {{ product.price | number }} đ
-                            <i class="fa fa-shopping-cart"></i>
-                        </button>
+    <div class="spinner margin-top-md margin-bottom-md" ng-if="productSearchVm.isSearching"></div>
+    <div ng-if="productSearchVm.isSearching === false">
+        <h4>Có {{ productSearchVm.results.length }} kết quả tìm kiếm cho từ khóa "{{ productSearchVm.query }}"</h4>
+        <div class="row">
+            <ul class="o-product-list">
+                <li ng-repeat="product in productSearchVm.results" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="o-product-card well">
+                        <a ui-sref="productDetails.productId({ productId: product.id })">
+                            <ul class="o-product-card-addon">
+                                <li ng-repeat="tag in product.tags" class="margin-left-sm" ng-class="indexVm.getTagLabelClass(tag)">{{ tag.tagName }}
+                                </li>
+                            </ul>
+                            <img class="o-product-card-img" ng-src="{{ product.media[0].link }}" alt="">
+                            <h3 class="o-product-card-title">{{ product.productName }}</h3>
+                        </a>
+                        <div class="text-right">
+                            <button class="btn btn-info">
+                                {{ product.price | number }} đ
+                                <i class="fa fa-shopping-cart"></i>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 </div>

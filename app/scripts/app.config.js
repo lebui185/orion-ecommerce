@@ -1,5 +1,7 @@
 angular.module('orionEcommerceApp')
-    .config(function($stateProvider, toastrConfig) {
+    .config(function($stateProvider, $authProvider, toastrConfig, API_ENDPOINT) {
+
+        // route
 
         $stateProvider.state({
             name: 'home',
@@ -7,6 +9,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/home/home.html',
             controller: 'HomeCtrl',
             controllerAs: 'homeVm',
+            authRequired: false
         });
 
         $stateProvider.state({
@@ -15,6 +18,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/account/account.html',
             controller: 'AccountCtrl',
             controllerAs: 'accountVm',
+            authRequired: true
         });
 
         $stateProvider.state({
@@ -23,6 +27,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/account/account-change-pass/account-change-pass.html',
             controller: 'AccountChangePassCtrl',
             controllerAs: 'accountChangePassVm',
+            authRequired: true
         });
 
         $stateProvider.state({
@@ -31,6 +36,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/account/account-info/account-info.html',
             controller: 'AccountInfoCtrl',
             controllerAs: 'accountInfoVm',
+            authRequired: true
         });
 
         $stateProvider.state({
@@ -39,6 +45,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/account/account-order/account-order.html',
             controller: 'AccountOrderCtrl',
             controllerAs: 'accountOrderVm',
+            authRequired: true
         });
 
         $stateProvider.state({
@@ -47,6 +54,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/checkout/checkout.html',
             controller: 'CheckoutCtrl',
             controllerAs: 'checkoutVm',
+            authRequired: false
         });
 
         $stateProvider.state({
@@ -55,14 +63,16 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/checkout/checkout-cart/checkout-cart.html',
             controller: 'CheckoutCartCtrl',
             controllerAs: 'checkoutCartVm',
+            authRequired: false
         });
-        
+
         $stateProvider.state({
             name: 'checkout.login',
             url: '/login',
             templateUrl: 'views/checkout/checkout-login/checkout-login.html',
             controller: 'CheckoutLoginCtrl',
             controllerAs: 'checkoutLoginVm',
+            authRequired: false
         });
 
         $stateProvider.state({
@@ -71,6 +81,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/checkout/checkout-address/checkout-address.html',
             controller: 'CheckoutAddressCtrl',
             controllerAs: 'checkoutAddressVm',
+            authRequired: true
         });
 
         $stateProvider.state({
@@ -79,6 +90,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/checkout/checkout-payment/checkout-payment.html',
             controller: 'CheckoutPaymentCtrl',
             controllerAs: 'checkoutPaymentVm',
+            authRequired: true
         });
 
 
@@ -88,6 +100,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/checkout-finish/checkout-finish.html',
             controller: 'CheckoutFinishCtrl',
             controllerAs: 'checkoutFinishVm',
+            authRequired: true
         });
 
 
@@ -97,6 +110,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/product-search/product-search.html',
             controller: 'ProductSearchCtrl',
             controllerAs: 'productSearchVm',
+            authRequired: false
         });
 
         $stateProvider.state({
@@ -105,13 +119,14 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/accessory-search/accessory-search.html',
             controller: 'AccessorySearchCtrl',
             controllerAs: 'accessorySearchVm',
+            authRequired: false
         });
 
         $stateProvider.state({
             name: 'category',
             abstract: true,
             url: '/category',
-            template: '<ui-view></ui-view>',
+            template: '<div ui-view><div class="spinner margin-top-lg"></div><div>',
         });
 
         $stateProvider.state({
@@ -120,6 +135,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/category-phone/category-phone.html',
             controller: 'CategoryPhoneCtrl',
             controllerAs: 'categoryPhoneVm',
+            authRequired: false
         });
 
         $stateProvider.state({
@@ -128,6 +144,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/category-tablet/category-tablet.html',
             controller: 'CategoryTabletCtrl',
             controllerAs: 'categoryTabletVm',
+            authRequired: false
         });
 
         $stateProvider.state({
@@ -136,6 +153,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/category-laptop/category-laptop.html',
             controller: 'CategoryLaptopCtrl',
             controllerAs: 'categoryLaptopVm',
+            authRequired: false
         });
 
         $stateProvider.state({
@@ -144,6 +162,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/category-accessory/category-accessory.html',
             controller: 'CategoryAccessoryCtrl',
             controllerAs: 'categoryAccessoryVm',
+            authRequired: false
         });
 
         $stateProvider.state({
@@ -152,6 +171,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/category-case/category-case.html',
             controller: 'CategoryCaseCtrl',
             controllerAs: 'categoryCaseVm',
+            authRequired: false
         });
 
         $stateProvider.state({
@@ -160,6 +180,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/category-connector/category-connector.html',
             controller: 'CategoryConnectorCtrl',
             controllerAs: 'categoryConnectorVm',
+            authRequired: false
         });
 
 
@@ -169,6 +190,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/category-headphone/category-headphone.html',
             controller: 'CategoryHeadphoneCtrl',
             controllerAs: 'categoryHeadphoneVm',
+            authRequired: false
         });
 
         $stateProvider.state({
@@ -177,6 +199,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/category-flashdisk/category-flashdisk.html',
             controller: 'CategoryFlashdiskCtrl',
             controllerAs: 'categoryFlashdiskVm',
+            authRequired: false
         });
 
         $stateProvider.state({
@@ -185,6 +208,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/category-mouse/category-mouse.html',
             controller: 'CategoryMouseCtrl',
             controllerAs: 'categoryMouseVm',
+            authRequired: false
         });
 
         $stateProvider.state({
@@ -193,6 +217,7 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/category-usb/category-usb.html',
             controller: 'CategoryUsbCtrl',
             controllerAs: 'categoryUsbVm',
+            authRequired: false
         });
 
         $stateProvider.state({
@@ -208,11 +233,36 @@ angular.module('orionEcommerceApp')
             templateUrl: 'views/product-details/product-details.html',
             controller: 'ProductDetailsCtrl',
             controllerAs: 'productDetailsVm',
+            authRequired: false
+        });
+
+        // Facebook
+        $authProvider.facebook({
+            clientId: '1363475290332214',
+            name: 'facebook',
+            url: API_ENDPOINT + '/facebook/login',
+            authorizationEndpoint: 'https://www.facebook.com/dialog/oauth?',
+            redirectUri: window.location.origin + '/app/index.html#home',
+            scope: ['public_profile'],
+            display: 'popup',
+            oauthType: '2.0',
+    
         });
 
 
+        // $authProvider.oauth2({
+        //     name: 'orion',
+        //     url: '/auth/foursquare',
+        //     clientId: 2,
+        //     redirectUri: window.location.origin,
+        //     authorizationEndpoint: 'https://foursquare.com/oauth2/authenticate',
+        // });
+
+
+        // toastr
+
         angular.extend(toastrConfig, {
-            positionClass: 'toast-bottom-center',
+            positionClass: 'toast-top-center',
             timeOut: 2000
         });
     });

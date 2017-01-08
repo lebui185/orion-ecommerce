@@ -10,15 +10,19 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in checkoutCartVm.cart.items">
-                <td class="hidden-xs"><img ng-src="{{ item.image }}" height="50"></td>
-                <td class="">{{ item.title }}</td>
-                <td class=" text-right" style="width: 150px;">
-                    <ram-touch-spin type="text" ng-model="item.quantity" ></ram-touch-spin>
+            <tr ng-repeat="product in indexVm.cartItems">
+                <td class="hidden-xs">
+                    <a ui-sref="productDetails.productId({ productId: product.id })">
+                        <img ng-src="{{ product.media[0].link }}" height="50">
+                    </a>
                 </td>
-                <td class=" text-right" style="width: 200px;">{{ item.price | number}} đ</td>
+                <td class="">{{ product.productName }}</td>
+                <td class=" text-right" style="width: 150px;">
+                    <ram-touch-spin type="text" min="1" ng-model="product.quantity"></ram-touch-spin>
+                </td>
+                <td class=" text-right" style="width: 200px;">{{ product.price | number}} đ</td>
                 <td class=" text-center" style="width: 100px;">
-                    <button type="button" class="btn btn-danger btn-sm">
+                    <button type="button" class="btn btn-danger btn-sm" ng-click="indexVm.removeItemFromCart(product.id)">
                         <i class="fa fa-remove"></i>
                     </button>
                 </td>
@@ -28,7 +32,7 @@
 </div>
 <div class="row">
     <div class="col-sm-offset-6 col-sm-6 col-md-offset-8 col-md-4 col-lg-3">
-    	<div class="price h4 text-center">Tổng tiền: {{ checkoutCartVm.cart.total | number }} đ</div>
-        <a type="button" class="btn btn-info btn-lg btn-block" ui-sref="checkout.login">Tiếp tục</a>
+    	<div class="price h4 text-center">Tổng tiền: {{ indexVm.totalPrice | number }} đ</div>
+        <a type="button" class="btn btn-info btn-lg btn-block" ng-click="checkoutCartVm.next()">Tiếp tục</a>
     </div>
 </div>

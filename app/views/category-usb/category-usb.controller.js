@@ -36,19 +36,6 @@ angular.module('orionEcommerceApp')
             }
         };
 
-        // type select
-
-        vm.inputTypes = [
-            { name: 'USB OTG', ticked: false },
-            { name: 'USB Type C', ticked: false },
-        ];
-
-        vm.outputTypes = [];
-
-        vm.onTypeSelect = function(data) {
-            console.log(vm.outputTypes);
-        };
-
         // Price slider
 
         vm.priceSlider = {

@@ -3,10 +3,21 @@ angular.module('orionEcommerceApp', [
 		'toastr',
 		'isteven-multi-select',
 		'rzModule',
-		'ram.touchspin'
+		'ram.touchspin',
+		'satellizer',
+		'LocalStorageModule'
 	])
-	.run(function($state) {
+	.run(function($state, $rootScope, authService) {
 		$state.go('home');
-	});
 
-	//'ui.bootstrap'
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+            if (toState.authRequired && !authService.isAuthenticated()) {
+                // User isn’t authenticated
+                $state.transitionTo('home');
+                event.preventDefault();
+            } else if (toState.name === 'checkout.login' && authService.isAuthenticated()) {
+            	$state.transitionTo('checkout.address');
+            	event.preventDefault();
+            }
+        });
+	});

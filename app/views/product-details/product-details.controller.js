@@ -1,7 +1,45 @@
 angular.module('orionEcommerceApp')
-    .controller('ProductDetailsCtrl', function($stateParams) {
+    .controller('ProductDetailsCtrl', function($stateParams, $filter, $timeout, $scope, productService, toastr) {
         var vm = this;
         vm.sliderImages = null;
+        vm.product = null;
+        vm.quantity = 1;
+
+        vm.isGettingRelatedProducts = true;
+        vm.isGettingRelatedAccessories = true;
+
+        vm.getProduct = function getProduct(id) {
+            productService.getProduct($stateParams.productId)
+                .then(function(res) {
+                    console.log(res.data);
+                    vm.product = res.data;
+
+                    productService.getRelatedProducts(vm.product.id)
+                        .then(function(res) {
+                            vm.isGettingRelatedProducts = false;
+                            vm.relatedProducts = res.data
+
+                        }, function(res) {
+                            vm.isGettingRelatedProducts = false;
+                            toastr.error('Không thể lấy sản phẩm liên quan');
+                        });
+
+                    if (vm.product.categoryName === 'Phone' || vm.product.categoryName === 'Laptop' || vm.product.categoryName === 'Tablet') {
+                        productService.getRelatedAccessories(vm.product.id)
+                            .then(function(res) {
+                                vm.isGettingRelatedAccessories = false;
+                                vm.relatedAccessories = res.data;
+
+                            }, function(res) {
+                                vm.isGettingRelatedAccessories = false;
+                                toastr.error('Không thể lấy phụ kiện liên quan');
+                            });
+                    }
+
+                }, function(res) {
+                    toastr.error('Không thể lấy chi tiết sản phẩm');
+                });
+        }
 
         // dom
         var overlaySlider = document.getElementById('overlay-image-slider');
@@ -56,48 +94,7 @@ angular.module('orionEcommerceApp')
             vm.openOverlaySlider();
         };
 
-        vm.relatedAccessories = [{
-            id: 'PK001',
-            image: 'img/product/accessory/headphone/awei-gold-avatar.jpg',
-            title: 'Tai nghe EP Awei ES979 Vi Gold',
-            price: 200000
-        }, {
-            id: 'PK002',
-            image: 'img/product/accessory/connector/micro-usb-20cm.jpg',
-            title: 'Cáp Micro USB 20cm Eco MU09-200',
-            price: 200000
-        }, {
-            id: 'PK003',
-            image: 'img/product/accessory/case/oppo-a39-soft-plastic.jpg',
-            title: 'Ốp lưng Oppo A39 dựa dẻo ilike xám',
-            price: 200000
-        }, {
-            id: 'PK003',
-            image: 'img/product/accessory/case/oppo-a39-soft-plastic.jpg',
-            title: 'Ốp lưng Oppo A39 dựa dẻo ilike xám',
-            price: 200000
-        }];
+        vm.getProduct();
 
-        vm.relatedProducts = [{
-            id: 'PK001',
-            image: 'img/product/iphone-6s-plus.png',
-            title: 'iPhone 6s Plus 128GB',
-            price: 19000000
-        }, {
-            id: 'PK001',
-            image: 'img/product/iphone-6s-plus.png',
-            title: 'iPhone 6s Plus 128GB',
-            price: 19000000
-        }, {
-            id: 'PK001',
-            image: 'img/product/iphone-6s-plus.png',
-            title: 'iPhone 6s Plus 128GB',
-            price: 19000000
-        }, {
-            id: 'PK001',
-            image: 'img/product/iphone-6s-plus.png',
-            title: 'iPhone 6s Plus 128GB',
-            price: 19000000
-        }];
 
     });

@@ -2,12 +2,12 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="well">
-                <h3>iPhone 7 Plus 256GB</h3>
+                <h3>{{ productDetailsVm.product.productName }}</h3>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-4">
                         <div class="o-product-details-image-group">
-                            <img class="o-product-details-feature-image margin-bottom-md" src="img/product/iphone-7/iphone-7-main.png" alt="">
-                            <ul class="o-product-details-image-button-group">
+                            <img class="o-product-details-feature-image margin-bottom-md" ng-src="{{ productDetailsVm.product.media[0].link }}" alt="">
+                            <!-- <ul class="o-product-details-image-button-group">
                                 <li>
                                     <button type="button" class="btn btn-default btn-block" ng-click="productDetailsVm.openSliderImages('gold')">
                                         <img src="img/product/iphone-7/iphone-7-vang-dong-main.png" alt="">
@@ -32,20 +32,20 @@
                                     </button>
                                     Mở hộp
                                 </li>
-                            </ul>
+                            </ul> -->
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-3">
-                        <div class="h3 price margin-bottom-md">Giá: 20.000.000 đ</div>
+                        <div class="h4 price margin-bottom-md">Giá: {{ productDetailsVm.product.price | number }} đ</div>
                         <div class="row margin-bottom-md no-gutter">
                             <div class="col-xs-4" style="padding-left: 15px; padding-top: 6px;">
                                 <label>Số lượng</label>
                             </div>
                             <div class="col-xs-4">
-                                <input ram-touch-spin type="text" ng-model="item.quantity">
+                                <ram-touch-spin type="text" min="1" ng-model="productDetailsVm.quantity"></ram-touch-spin>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-info btn-block btn-xl">
+                        <button type="button" class="btn btn-info btn-block btn-xl" ng-click="indexVm.addItemToCart(productDetailsVm.product, productDetailsVm.quantity)">
                             <span class="h5">THÊM VÀO GIỎ HÀNG</span>
                         </button>
                         <br>
@@ -55,66 +55,169 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-5">
                         <div class="h5">Thông số kỹ thuật</div>
-                        <table class="table table-hover">
+                        <table ng-if="productDetailsVm.product.categoryName ==='Phone' || productDetailsVm.product.categoryName ==='Tablet'" class="table table-hover">
                             <tbody>
                                 <tr>
                                     <td>Màn hình</td>
-                                    <td>LED-backlit IPS LCD, 5.5", Retina HD</td>
+                                    <td>{{ productDetailsVm.product.details.screenSize }}, {{ productDetailsVm.product.details.screenDetails }}</td>
                                 </tr>
                                 <tr>
                                     <td>Hệ điều hành:</td>
-                                    <td>iOS 10</td>
+                                    <td>{{ productDetailsVm.product.details.os }}</td>
                                 </tr>
                                 <tr>
                                     <td>Camera sau</td>
-                                    <td>Hai camera 12 MP</td>
+                                    <td>{{ productDetailsVm.product.details.backCameraRes }} MP</td>
                                 </tr>
                                 <tr>
                                     <td>Camera trước</td>
-                                    <td>7 MP</td>
+                                    <td>{{ productDetailsVm.product.details.frontCameraRes }} MP</td>
                                 </tr>
                                 <tr>
                                     <td>CPU</td>
-                                    <td>Apple A10 Fusion 4 nhân 64-bit</td>
+                                    <td>{{ productDetailsVm.product.details.cpu }}</td>
                                 </tr>
                                 <tr>
                                     <td>RAM</td>
-                                    <td>3 GB</td>
+                                    <td>{{ productDetailsVm.product.details.ram }} GB</td>
                                 </tr>
                                 <tr>
                                     <td>Bộ nhớ trong</td>
-                                    <td>32 GB</td>
+                                    <td>{{ productDetailsVm.product.details.internalMemSize }} GB</td>
                                 </tr>
                                 <tr>
                                     <td>Hỗ trợ thẻ nhớ</td>
-                                    <td>Không</td>
+                                    <td>
+                                        {{ productDetailsVm.product.details.externalDiskSupported === true ? 'Có': 'Không'}}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Thẻ SIM</td>
-                                    <td>1 SIM, Nano SIM</td>
+                                    <td>{{ productDetailsVm.product.details.sim }}</td>
                                 </tr>
                                 <tr>
                                     <td>Dung lượng pin</td>
-                                    <td>2900 mAh</td>
+                                    <td>{{ productDetailsVm.product.details.pinCapacity }} mAh</td>
+                                </tr>
+                                <tr>
+                                    <td>Cổng sạc</td>
+                                    <td>{{ productDetailsVm.product.details.charge }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Kết nối</td>
+                                    <td>{{ productDetailsVm.product.details.connect }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Jack tai nghe</td>
+                                    <td>{{ productDetailsVm.product.details.headphone }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Khối lượng</td>
+                                    <td>{{ productDetailsVm.product.details.weight }} g</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <button type="button" class="btn-block btn btn-default" ng-click="productDetailsVm.openOverlayFullDetails()">Xem thông số chi tiết</button>
+                        <table ng-if="productDetailsVm.product.categoryName ==='Laptop'" class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <td>Màn hình</td>
+                                    <td>{{ productDetailsVm.product.details.screenSize }}, {{ productDetailsVm.product.details.screenDetails }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Mainboard</td>
+                                    <td>{{ productDetailsVm.product.details.mainboard }}</td>
+                                </tr>
+                                <tr>
+                                    <td>CPU</td>
+                                    <td>{{ productDetailsVm.product.details.cpu }}</td>
+                                </tr>
+                                <tr>
+                                    <td>RAM</td>
+                                    <td>{{ productDetailsVm.product.details.ram }} GB</td>
+                                </tr>
+                                <tr>
+                                    <td>Ổ cứng</td>
+                                    <td>{{ productDetailsVm.product.details.hddSize }} GB</td>
+                                </tr>
+                                <tr>
+                                    <td>Card đồ họa</td>
+                                    <td>
+                                        {{ productDetailsVm.product.details.graphicCard }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Webcam</td>
+                                    <td>{{ productDetailsVm.product.details.webcam }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Dung lượng pin</td>
+                                    <td>{{ productDetailsVm.product.details.pinCapacity }} cell</td>
+                                </tr>
+                                <tr>
+                                    <td>Màn hình cảm ứng</td>
+                                    <td>{{ productDetailsVm.product.details.hasTouchScreen ? 'Có' : 'Không' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Ổ đĩa quang</td>
+                                    <td>{{ productDetailsVm.product.details.hasOpticalDrive ? 'Có' : 'Không' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Kết nối</td>
+                                    <td>{{ productDetailsVm.product.details.connect }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Khối lượng</td>
+                                    <td>{{ productDetailsVm.product.details.weight }} kg</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table ng-if="productDetailsVm.product.categoryName ==='Headphone'" class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <td>Cổng kết nối</td>
+                                    <td>{{ productDetailsVm.product.details.connect }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Loại</td>
+                                    <td>{{ productDetailsVm.product.details.type }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Phím chức năng</td>
+                                    <td>{{ productDetailsVm.product.details.featureButton }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table ng-if="productDetailsVm.product.categoryName ==='Connector'" class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <td>Loại</td>
+                                    <td>{{ productDetailsVm.product.details.type }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Nguồn vào</td>
+                                    <td>{{ productDetailsVm.product.details.input }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Nguồn ra</td>
+                                    <td>{{ productDetailsVm.product.details.output }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" ng-if="productDetailsVm.product.categoryName ==='Phone' || productDetailsVm.product.categoryName ==='Tablet' || productDetailsVm.product.categoryName ==='Laptop'">
         <div class="col-xs-12">
             <div class="well">
                 <h4>Phụ kiện liên quan</h4>
                 <div class="row">
                     <div ng-repeat="product in productDetailsVm.relatedAccessories" class="col-xs-6 col-sm-3 col-md-2 margin-bottom-md">
                         <div class="o-product-card-min">
-                            <a class="text-center">
-                                <img ng-src="{{ product.image }}" alt="">
-                                <h6 class="title">{{ product.title }}</h6>
+                            <a class="text-center" ui-sref="productDetails.productId({ productId: product.id })">
+                                <img ng-src="{{ product.media[0].link }}" alt="">
+                                <h6 class="title">{{ product.productName }}</h6>
                                 <div class="price">{{ product.price | number }} đ</div>
                             </a>
                         </div>
@@ -123,16 +226,16 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row ">
         <div class="col-xs-12">
             <div class="well">
                 <h4>Sản phẩm liên quan</h4>
                 <div class="row">
                     <div ng-repeat="product in productDetailsVm.relatedProducts" class="col-xs-6 col-sm-3 col-md-2 margin-bottom-md">
                         <div class="o-product-card-min">
-                            <a class="text-center">
-                                <img ng-src="{{ product.image }}" alt="">
-                                <h6 class="title">{{ product.title }}</h6>
+                            <a class="text-center" ui-sref="productDetails.productId({ productId: product.id })">
+                                <img ng-src="{{ product.media[0].link }}" alt="">
+                                <h6 class="title">{{ product.productName }}</h6>
                                 <div class="price">{{ product.price | number }} đ</div>
                             </a>
                         </div>
@@ -142,7 +245,7 @@
         </div>
     </div>
 </div>
-<div class="overlay" id="overlay-image-slider">
+<!-- <div class="overlay" id="overlay-image-slider">
     <div class="text-right margin-bottom-md">
         <button type="button" class="btn btn-danger" ng-click="productDetailsVm.closeOverlaySlider()">&times; Đóng</button>
     </div>
@@ -158,8 +261,8 @@
         <a class="left carousel-control" data-target="#carousel-id" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
         <a class="right carousel-control" data-target="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
     </div>
-</div>
-<div class="overlay" id="overlay-full-details">
+</div> -->
+<!-- <div class="overlay" id="overlay-full-details">
     <div class="text-right margin-bottom-md">
         <button type="button" class="btn btn-danger" ng-click="productDetailsVm.closeOverlayFullDetails()">&times; Đóng</button>
     </div>
@@ -211,3 +314,4 @@
         </table>
     </div>
 </div>
+ -->

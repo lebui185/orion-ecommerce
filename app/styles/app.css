@@ -1,7 +1,7 @@
 /*loading spinner*/
 
 
-/*.spinner {
+.spinner {
     height: 28px;
     width: 28px;
     animation: rotate 0.8s infinite linear;
@@ -24,7 +24,7 @@
         transform: rotate(360deg);
     }
 }
-*/
+
 
 html {
     height: 100%;
@@ -271,7 +271,7 @@ main h3 {
     height: 100px;
 }
 
-.o-product-card-min > title {
+.o-product-card-min .title {
     height: 32px;
 }
 
@@ -468,7 +468,7 @@ main h3 {
 .o-popver-cart-product-card .info {
     float: left;
     margin-left: 6px;
-    max-width: 170px;
+    width: 230px;
     position: relative;
     height: 50px;
 }
@@ -549,4 +549,8 @@ main h3 {
 .o-order-product-list {
     list-style-type: none;
     padding: 0;
+}
+
+.badge {
+    background-color: #da4453;
 }

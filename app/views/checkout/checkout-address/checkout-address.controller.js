@@ -5,11 +5,11 @@ angular.module('orionEcommerceApp')
         $rootScope.$emit(EVENT.CHECKOUT_STEP_LOADED, 'Địa chỉ giao hàng');
 
         vm.deliveryProfiles = [{
-            name: 'Bùi Diễm Trang',
+            name: 'Nguyễn Văn A',
             phoneNumber: '0936864853',
             address: '12345678 Đường Nào Đó, phường 1, Quận X, TP. Hồ Chí Minh'
         }, {
-            name: 'Bùi Diễm Trang',
+            name: 'Nguyễn Văn A',
             phoneNumber: '0936864853',
             address: '12345678 Đường Nào Đó, phường 1, Quận X, TP. Hồ Chí Minh'
         }];

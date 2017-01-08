@@ -1,23 +1,95 @@
 angular.module('orionEcommerceApp')
-    .controller('CategoryLaptopCtrl', function($filter, $scope, $timeout) {
+    .controller('CategoryLaptopCtrl', function($filter, $timeout, $scope, productService, toastr, PRODUCT_LOAD_LIMIT) {
         var vm = this;
         var numberFilter = $filter('number');
+        var currentOffset = 0;
+        vm.isGettingProducts = true;
+        vm.hasMoreProducts = false;
 
         // sort criteria
 
         vm.sortCriteriaOptions = [{
-            key: '0',
-            value: 'Giá thấp cao đến thấp'
+            key: '-price',
+            value: 'Giá cao đến thấp'
         }, {
-            key: '1',
-            value: 'Giá thấp thấp đến cao'
+            key: '+price',
+            value: 'Giá thấp đến cao'
         }, {
-            key: '2',
+            key: '-date',
             value: 'Mới nhất'
         }, {
-            key: '3',
+            key: '+date',
             value: 'Cũ nhất'
         }];
+
+        vm.params = {
+            offset: currentOffset,
+            limit: PRODUCT_LOAD_LIMIT,
+            sort: '-price',
+            minPrice: 500000,
+            maxPrice: 25000000,
+            minRam: 0,
+            maxRam: 8,
+            minHddSize: 0,
+            maxHddSize: 256,
+            minPinCapacity: 1000,
+            maxPinCapacity: 4000,
+            minScreenSize: 2.5,
+            maxScreenSize: 6
+        };
+
+        vm.getProducts = function() {
+            vm.isGettingProducts = true;
+            setMaker();
+
+            if (currentOffset === 0) {
+                vm.products = [];
+            }
+
+            productService.getProducts('laptop', vm.params)
+                .then(function(res) {
+                    vm.isGettingProducts = false;
+                    var remaining = res.headers('remaining');
+                    currentOffset += res.data.length;
+
+                    for (var i = 0; i < res.data.length; i++) {
+                        vm.products.push(res.data[i]);
+                    }
+
+                    if (remaining !== '0') {
+                        vm.hasMoreProducts = true;
+                    } else {
+                        vm.hasMoreProducts = false;
+                    }
+
+                }, function(res) {
+                    vm.isGettingProducts = false;
+                    toastr.error('Không thể lấy danh sách máy tính bảng');
+                });
+        };
+
+        // preprocess function
+
+        function setMaker() {
+            if (vm.outputBrands.length > 0) {
+                vm.params.maker = '';
+
+                for (var i = 0; i < vm.outputBrands.length; i++) {
+                    vm.params.maker = vm.params.maker + vm.outputBrands[i].name;
+
+                    if (i < vm.outputBrands.length - 1) {
+                        vm.params.maker = vm.params.maker + ',';
+                    }
+                }
+            } else {
+                delete vm.params.maker;
+            }
+        }
+
+        vm.sortCriteriaChange = function() {
+            currentOffset = 0;
+            vm.getProducts();
+        };
 
         // Brand select
 
@@ -32,20 +104,20 @@ angular.module('orionEcommerceApp')
         vm.outputBrands = [];
 
         vm.onBrandSelect = function(data) {
-            console.log(vm.outputBrands);
+            currentOffset = 0;
+            vm.getProducts();
         };
 
         // Price slider
 
         vm.priceSlider = {
-            min: 300000,
-            max: 30000000,
             options: {
                 floor: 300000,
                 ceil: 30000000,
                 step: 250000,
                 onEnd: function() {
-
+                    currentOffset = 0;
+                    vm.getProducts();
                 },
                 translate: function(value) {
                     return numberFilter(value) + ' đ';
@@ -55,14 +127,13 @@ angular.module('orionEcommerceApp')
 
         // Screen size slider
         vm.screenSizeSlider = {
-            min: 10,
-            max: 16,
             options: {
                 floor: 10,
                 ceil: 16,
                 step: 1,
                 onEnd: function() {
-
+                    currentOffset = 0;
+                    vm.getProducts();
                 },
                 translate: function(value) {
                     return numberFilter(value) + '"';
@@ -72,14 +143,13 @@ angular.module('orionEcommerceApp')
 
         // RAM size slider
         vm.ramSizeSlider = {
-            min: 0,
-            max: 32,
             options: {
                 floor: 0,
                 ceil: 32,
                 step: 1,
                 onEnd: function() {
-
+                    currentOffset = 0;
+                    vm.getProducts();
                 },
                 translate: function(value) {
                     return numberFilter(value) + ' GB';
@@ -88,7 +158,7 @@ angular.module('orionEcommerceApp')
         };
 
         // hard disk size slider
-        vm.hardDiskSizeSlider = {
+        vm.hddSizeSlider = {
             min: 0,
             max: 1024,
             options: {
@@ -96,7 +166,8 @@ angular.module('orionEcommerceApp')
                 ceil: 1024,
                 step: 64,
                 onEnd: function() {
-
+                    currentOffset = 0;
+                    vm.getProducts();
                 },
                 translate: function(value) {
                     return numberFilter(value) + ' GB';
@@ -113,25 +184,13 @@ angular.module('orionEcommerceApp')
                 ceil: 12,
                 step: 1,
                 onEnd: function() {
-
+                    currentOffset = 0;
+                    vm.getProducts();
                 },
                 translate: function(value) {
                     return numberFilter(value) + ' cell';
                 }
             }
-        };
-
-        // Features select
-        vm.inputFeatures = [
-            { name: 'Card đồ họa rời', ticked: false },
-            { name: 'Màn hình cảm ứng', ticked: false },
-            { name: 'Ổ cứng SSD', ticked: false }
-        ];
-
-        vm.outputFeatures = [];
-
-        vm.onFeatureSelect = function(data) {
-            console.log(vm.outputFeatures);
         };
 
         // main
@@ -144,29 +203,30 @@ angular.module('orionEcommerceApp')
 
         vm.resetFilter = function() {
             resetMultiSelect(vm.inputBrands);
-            resetMultiSelect(vm.inputFeatures);
 
-            vm.priceSlider.min = vm.priceSlider.options.floor;
-            vm.priceSlider.max = vm.priceSlider.options.ceil;
+            vm.params.minPrice = vm.priceSlider.options.floor;
+            vm.params.maxPrice = vm.priceSlider.options.ceil;
 
-            vm.screenSizeSlider.min = vm.screenSizeSlider.options.floor;
-            vm.screenSizeSlider.max = vm.screenSizeSlider.options.ceil;
+            vm.params.minScreenSize = vm.screenSizeSlider.options.floor;
+            vm.params.maxScreenSize = vm.screenSizeSlider.options.ceil;
 
-            vm.ramSizeSlider.min = vm.ramSizeSlider.options.floor;
-            vm.ramSizeSlider.max = vm.ramSizeSlider.options.ceil;
+            vm.params.minRam = vm.ramSizeSlider.options.floor;
+            vm.params.maxRam = vm.ramSizeSlider.options.ceil;
 
-            vm.hardDiskSizeSlider.min = vm.hardDiskSizeSlider.options.floor;
-            vm.hardDiskSizeSlider.max = vm.hardDiskSizeSlider.options.ceil;
+            vm.params.minHddSize = vm.hddSizeSlider.options.floor;
+            vm.params.maxHddSize = vm.hddSizeSlider.options.ceil;
 
-            vm.pinCapacitySlider.min = vm.pinCapacitySlider.options.floor;
-            vm.pinCapacitySlider.max = vm.pinCapacitySlider.options.ceil;
+            vm.params.minPinCapacity = vm.pinCapacitySlider.options.floor;
+            vm.params.maxPinCapacity = vm.pinCapacitySlider.options.ceil;
         };
+
+        vm.resetFilter();
+        vm.getProducts();
 
         // DOM sidebar
         var openSidebarButton = document.getElementById('open-sidebar-button');
         var closeSidebarButton = document.getElementById('close-sidebar-button');
         var sidebar = document.querySelector(".sidebar");
-        var sidebarBody = sidebar.querySelector('.sidebar-body');
 
         vm.refreshSlider = function() {
             $timeout(function() {
