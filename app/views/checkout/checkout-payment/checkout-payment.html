@@ -9,8 +9,12 @@
 <div class="row">
     <div class="col-xs-12 col-sm-6">
         <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Đơn hàng</h3>
+            <div class="panel-heading" style="overflow: auto;">
+                <h3 class="panel-title pull-left">Đơn hàng</h3>
+                <a ui-sref="checkout.cart" class="btn btn-default pull-right btn-sm">
+                    <i class="fa fa-edit"></i>
+                    Sửa
+                </a>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -23,29 +27,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Tai nghe EP Awei ES979 Vi Gold</td>
-                                <td class="text-right">10</td>
-                                <td class="text-right">{{ 100000 | number }} đ</td>
-                            </tr>
-                            <tr>
-                                <td>Tai nghe EP Awei ES979 Vi Gold</td>
-                                <td class="text-right">10</td>
-                                <td class="text-right">{{ 100000 | number }} đ</td>
-                            </tr>
-                            <tr>
-                                <td>Tai nghe EP Awei ES979 Vi Gold</td>
-                                <td class="text-right">10</td>
-                                <td class="text-right">{{ 100000 | number }} đ</td>
-                            </tr>
-                            <tr>
-                                <td>Tai nghe EP Awei ES979 Vi Gold</td>
-                                <td class="text-right">10</td>
-                                <td class="text-right">{{ 100000 | number }} đ</td>
+                            <tr ng-repeat="product in indexVm.cartItems">
+                                <td>{{  product.productName }}</td>
+                                <td class="text-right">{{ product.quantity | number }}</td>
+                                <td class="text-right">{{ product.price * product.quantity | number }} đ</td>
                             </tr>
                             <tr>
                             	<td colspan="2"><strong>Tổng tiền</strong></td>
-                            	<td class="text-right price">{{ 400000 | number }} đ</td>
+                            	<td class="text-right price">{{ indexVm.totalPrice | number }} đ</td>
                             </tr>
                         </tbody>
                     </table>
@@ -55,23 +44,27 @@
     </div>
     <div class="col-xs-12 col-sm-6">
         <div class="panel panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title">Địa chỉ giao hàng</h3>
+            <div class="panel-heading" style="overflow: auto;">
+                <h3 class="panel-title pull-left">Địa chỉ giao hàng</h3>
+                <a ui-sref="checkout.address" class="btn btn-default pull-right btn-sm">
+                    <i class="fa fa-edit"></i>
+                    Sửa
+                </a>
             </div>
             <div class="panel-body">
                 <table class="table">
                     <tbody>
                         <tr>
                             <td style="width: 80px;">Tên</td>
-                            <td>Nguyễn Văn A</td>
+                            <td>{{ userProfileTemp.customerName }}</td>
                         </tr>
                         <tr>
                             <td>Điện thoại</td>
-                            <td>01112233445</td>
+                            <td>{{ userProfileTemp.phone }}</td>
                         </tr>
                         <tr>
                             <td>Địa chỉ</td>
-                            <td>12345678 Đường Nào Đó, phường 1, Quận X, TP. Hồ Chí Minh</td>
+                            <td>{{ userProfileTemp.address }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -81,8 +74,11 @@
     <div class="clearfix">
     </div>
     <div class="col-xs-12 col-sm-offset-6 col-sm-6 col-md-offset-8 col-md-4">
-        <a ui-sref="checkoutFinish" class="btn btn-danger btn-block btn-xl">
+        <button type="button" class="btn btn-danger btn-block btn-xl" ng-click="checkoutPaymentVm.checkout()">
             <i class="fa fa-check-square-o fa-lg"></i> HOÀN TẤT ĐẶT HÀNG
-        </a>
+        </button>
+    </div>
+    <div class="col-xs-12 col-sm-offset-6 col-sm-6 col-md-offset-8 col-md-4">
+        <div ng-if="checkoutPaymentVm.isCheckingout" class="spinner"></div>
     </div>
 </div>

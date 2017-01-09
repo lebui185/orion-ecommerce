@@ -5,20 +5,14 @@ angular.module('orionEcommerceApp')
         vm.featuredAccessories = null;
         vm.isGettingFeaturedAccessories = true;
 
-        productService.getFeaturedAccessories()
-            .then(function(res) {
-
-                setTimeout(function() {
-                    console.log(res.data);
-
+        if ($state.current.name === 'category.accessory') {
+            productService.getFeaturedAccessories()
+                .then(function(res) {
                     vm.isGettingFeaturedAccessories = false;
                     vm.featuredAccessories = res.data;
 
-                    $scope.$apply();
-                }, 1000);
-
-            }, function(res) {
-                toastr.error('Không thể lấy danh sách sản phẩm nổi bật');
-            });
-
+                }, function(res) {
+                    toastr.error('Không thể lấy danh sách sản phẩm nổi bật');
+                });
+        }
     });

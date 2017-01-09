@@ -47,7 +47,7 @@
                     <li class="dropdown">
                         <button class="navbar-btn dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-user fa-lg">
-                                <span class="hidden-xs">{{ indexVm.userName }}</span>
+                                <span class="hidden-xs">{{ userProfile.customerName }}</span>
                             </i>
                             <b class="caret"></b>
                         </button>
@@ -100,22 +100,22 @@
         </nav>
         <nav class="container-fluid o-catalog hidden-xs">
             <div class="row no-gutter">
-                <li class="col-xs-12 col-sm-6 col-md-3">
+                <li class="col-xs-12 col-sm-3">
                     <a ui-sref-active="btn-info-active" ui-sref="category.phone" class="btn btn-secondary">
                         <img src="img/phone.png" alt=""> Điện thoại
                     </a>
                 </li>
-                <li class="col-xs-12 col-sm-6 col-md-3">
+                <li class="col-xs-12 col-sm-3">
                     <a ui-sref-active-eq="btn-info-active" ui-sref="category.tablet" class="btn btn-secondary">
                         <img src="img/tablet.png" alt=""> Máy tính bảng
                     </a>
                 </li>
-                <li class="col-xs-12 col-sm-6 col-md-3">
+                <li class="col-xs-12 col-sm-3">
                     <a ui-sref-active="btn-info-active" ui-sref="category.laptop" class="btn btn-secondary">
                         <img src="img/laptop.png" alt=""> Laptop
                     </a>
                 </li>
-                <li class="col-xs-12 col-sm-6 col-md-3">
+                <li class="col-xs-12 col-sm-3">
                     <a ui-sref-active="btn-info-active" ui-sref="category.accessory" class="btn btn-secondary">
                         <img src="img/headphones.png" alt=""> Phụ kiện
                     </a>
@@ -123,7 +123,10 @@
             </div>
         </nav>
         <div id="cart-popover-wrapper" class="hidden">
-            <div class="o-popover-cart-container">
+            <div ng-if="indexVm.cartItemsCount === 0" style="padding: 8px;">
+                Giỏ hàng rỗng
+            </div>
+            <div class="o-popover-cart-container" ng-if="indexVm.cartItemsCount > 0">
                 <div class="o-popover-cart-body">
                     <ul class="o-popover-cart-product-list">
                         <li ng-repeat="product in indexVm.cartItems" class="o-popver-cart-product-card">
@@ -185,6 +188,7 @@
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-info btn-block">Đăng nhập</button>
                     </div>
+                    <div class="spinner" ng-if="indexVm.isAuthenticating"></div>
                 </form>
             </div>
         </div>
@@ -192,7 +196,7 @@
     <div class="modal fade" id="register-modal">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <form>
+                <form ng-submit="indexVm.register()">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Đăng ký</h4>
@@ -200,21 +204,22 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="">Tên đăng nhập</label>
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" placeholder="" ng-model="indexVm.registerUsername">
                         </div>
                         <div class="form-group">
                             <label for="">Mật khẩu</label>
-                            <input type="password" class="form-control" placeholder="">
+                            <input type="password" class="form-control" placeholder="" ng-model="indexVm.registerPassword">
                         </div>
                         <div class="form-group">
                             <label for="">Họ và tên</label>
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" placeholder="" ng-model="indexVm.registerName">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-info btn-block">Tạo tài khoản</button>
                     </div>
                 </form>
+                <div class="spinner" ng-if="indexVm.isRegistering"></div>
             </div>
         </div>
     </div>
@@ -271,7 +276,9 @@
     <script src="services/cart.service.js"></script>
     <script src="services/user.service.js"></script>
     <script src="services/product.service.js"></script>
+    <script src="services/payment.service.js"></script>
     <!-- filter -->
+    <script src="filters/order-state.filter.js"></script>
 </body>
 
 </html>

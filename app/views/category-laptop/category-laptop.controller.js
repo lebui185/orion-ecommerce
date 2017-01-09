@@ -27,7 +27,7 @@ angular.module('orionEcommerceApp')
             limit: PRODUCT_LOAD_LIMIT,
             sort: '-price',
             minPrice: 500000,
-            maxPrice: 25000000,
+            maxPrice: 40000000,
             minRam: 0,
             maxRam: 8,
             minHddSize: 0,
@@ -113,7 +113,7 @@ angular.module('orionEcommerceApp')
         vm.priceSlider = {
             options: {
                 floor: 300000,
-                ceil: 30000000,
+                ceil: 40000000,
                 step: 250000,
                 onEnd: function() {
                     currentOffset = 0;

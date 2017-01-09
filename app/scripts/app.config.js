@@ -238,11 +238,11 @@ angular.module('orionEcommerceApp')
 
         // Facebook
         $authProvider.facebook({
-            clientId: '1363475290332214',
+            clientId: '1102384113204168',
             name: 'facebook',
             url: API_ENDPOINT + '/facebook/login',
             authorizationEndpoint: 'https://www.facebook.com/dialog/oauth?',
-            redirectUri: window.location.origin + '/app/index.html#home',
+            redirectUri: window.location.origin + '/orion/app/index.html',
             scope: ['public_profile'],
             display: 'popup',
             oauthType: '2.0',

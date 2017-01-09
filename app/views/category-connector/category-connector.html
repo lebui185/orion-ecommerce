@@ -34,7 +34,7 @@
                         <h3 class="o-product-card-title">{{ product.productName }}</h3>
                     </a>
                     <div class="text-right">
-                        <button class="btn btn-info">
+                        <button class="btn btn-info" ng-click="indexVm.addItemToCart(product, 1)">
                             {{ product.price | number}} đ
                             <i class="fa fa-shopping-cart"></i>
                         </button>

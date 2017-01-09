@@ -14,6 +14,5 @@ angular.module('orionEcommerceApp')
 
             }, function(res) {
                 vm.isSearching = false;
-                toastr.error('Không thể lấy sản phẩm liên quan');
             });
     });

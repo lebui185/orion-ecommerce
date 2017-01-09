@@ -1,6 +1,6 @@
 angular.module('orionEcommerceApp')
-    .controller('CheckoutFinishCtrl', function() {
+    .controller('CheckoutFinishCtrl', function($rootScope, $scope, EVENT) {
         var vm = this;
 
-        vm.title = 'address';
+        $rootScope.$emit(EVENT.CHECKOUT_FINISH, null);
     });

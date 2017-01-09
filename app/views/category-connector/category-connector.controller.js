@@ -62,7 +62,7 @@ angular.module('orionEcommerceApp')
 
                 }, function(res) {
                     vm.isGettingProducts = false;
-                    toastr.error('Không thể lấy danh sách tai nghe');
+                    toastr.info('Không tìm thấy sản phẩm theo yêu cầu');
                 });
         };
 

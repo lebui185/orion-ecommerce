@@ -6,9 +6,9 @@ angular.module('orionEcommerceApp')
         var isAuthenticated = false;
 
         var authData = {
-            'grant_type': 'password',
-            'client_id': 2,
-            'client_secret': 'uexrsBOzfb6y7PHm4C2tIQrROBzAnF74jx1485TN',
+            grant_type: 'password',
+            client_id: 2,
+            client_secret: 'zieJ4KHCYt2dmYChZDBtcUO5zzHbZa8mRFKEgKDH',
             'username': '',
             'password': ''
         };
@@ -36,7 +36,10 @@ angular.module('orionEcommerceApp')
                 $http({
                     method: 'POST',
                     url: authUrl,
-                    data: authData
+                    data: authData,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 }).then(function(res) {
                     console.log(res.data);
                     applyAuthToken(res.data.access_token);
@@ -68,6 +71,18 @@ angular.module('orionEcommerceApp')
             $http.defaults.headers.common.Authorization = undefined;
         };
 
+        function register(registerData) {
+            console.log(registerData);
+            return $http({
+                method: 'POST',
+                url: API_ENDPOINT + '/register',
+                data: registerData,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
+
         loadAuthToken();
 
         return {
@@ -76,6 +91,7 @@ angular.module('orionEcommerceApp')
             },
             authenticate: authenticate,
             authenticateFacebook: authenticateFacebook,
-            logout: logout
+            logout: logout,
+            register: register
         };
     });

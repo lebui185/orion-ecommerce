@@ -1,7 +1,7 @@
 angular.module('orionEcommerceApp')
     .controller('CheckoutCtrl', function($state, $rootScope, $timeout, EVENT) {
         var vm = this;
-        vm.title = 'checkout';
+        vm.userProfile;
 
         vm.steps = [{
             name: 'Kiểm tra giỏ hàng',

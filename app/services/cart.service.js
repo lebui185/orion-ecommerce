@@ -104,10 +104,8 @@ angular.module('orionEcommerceApp')
 
         function addItem(item, quantity) {
             if (authService.isAuthenticated()) {
-                console.log('true');
                 return addToRemote(item, quantity);
             } else {
-                console.log('false');
                 var p = new Promise(function(resolve, reject) {
                     var data = addToLocalStorage(item, quantity);
                     console.log(item);
@@ -150,7 +148,6 @@ angular.module('orionEcommerceApp')
         }
 
         function getItems() {
-            console.log(authService.isAuthenticated());
             if (authService.isAuthenticated()) {
                 return $http({
                     method: 'GET',

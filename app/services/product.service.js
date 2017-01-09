@@ -45,54 +45,72 @@ angular.module('orionEcommerceApp')
 
         function getProducts(category, params) {
 
-            if (category === 'phone') {
-                return $http({
-                    method: 'GET',
-                    url: API_ENDPOINT + '/categories/phone',
-                    params: params
-                }).then(function(res) {
-                    preprocessProductList(res.data);
-                    return res;
-                });
-            } else if (category === 'tablet') {
-                return $http({
-                    method: 'GET',
-                    url: API_ENDPOINT + '/categories/tablet',
-                    params: params
-                }).then(function(res) {
-                    preprocessProductList(res.data);
-                    return res;
-                });
-            } else if (category === 'headphone') {
-                return $http({
-                    method: 'GET',
-                    url: API_ENDPOINT + '/categories/headphone',
-                    params: params
-                }).then(function(res) {
-                    preprocessProductList(res.data);
-                    return res;
-                });
-            } else if (category === 'laptop') {
-                return $http({
-                    method: 'GET',
-                    url: API_ENDPOINT + '/categories/laptop',
-                    params: params
-                }).then(function(res) {
-                    preprocessProductList(res.data);
-                    return res;
-                });
-            } else if (category === 'connector') {
-                return $http({
-                    method: 'GET',
-                    url: API_ENDPOINT + '/categories/connector',
-                    params: params
-                }).then(function(res) {
-                    preprocessProductList(res.data);
-                    return res;
-                });
-            } else {
+            // if (category === 'phone') {
+            //     return $http({
+            //         method: 'GET',
+            //         url: API_ENDPOINT + '/categories/phone',
+            //         params: params
+            //     }).then(function(res) {
+            //         preprocessProductList(res.data);
+            //         return res;
+            //     });
+            // } else if (category === 'tablet') {
+            //     return $http({
+            //         method: 'GET',
+            //         url: API_ENDPOINT + '/categories/tablet',
+            //         params: params
+            //     }).then(function(res) {
+            //         preprocessProductList(res.data);
+            //         return res;
+            //     });
+            // } else if (category === 'headphone') {
+            //     return $http({
+            //         method: 'GET',
+            //         url: API_ENDPOINT + '/categories/headphone',
+            //         params: params
+            //     }).then(function(res) {
+            //         preprocessProductList(res.data);
+            //         return res;
+            //     });
+            // } else if (category === 'laptop') {
+            //     return $http({
+            //         method: 'GET',
+            //         url: API_ENDPOINT + '/categories/laptop',
+            //         params: params
+            //     }).then(function(res) {
+            //         preprocessProductList(res.data);
+            //         return res;
+            //     });
+            // } else if (category === 'connector') {
+            //     return $http({
+            //         method: 'GET',
+            //         url: API_ENDPOINT + '/categories/connector',
+            //         params: params
+            //     }).then(function(res) {
+            //         preprocessProductList(res.data);
+            //         return res;
+            //     });
+            // } else if (category === 'flashdisk') {
+            //     return $http({
+            //         method: 'GET',
+            //         url: API_ENDPOINT + '/categories/flashdisk',
+            //         params: params
+            //     }).then(function(res) {
+            //         preprocessProductList(res.data);
+            //         return res;
+            //     });
+            // } else {
 
-            }
+            // }
+
+            return $http({
+                method: 'GET',
+                url: API_ENDPOINT + '/categories/' + category,
+                params: params
+            }).then(function(res) {
+                preprocessProductList(res.data);
+                return res;
+            });
         }
 
         function getProduct(id) {

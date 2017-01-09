@@ -1,5 +1,5 @@
 angular.module('orionEcommerceApp')
-    .controller('IndexCtrl', function($scope, $state, toastr, authService, cartService, authService, $rootScope, EVENT, userService) {
+    .controller('IndexCtrl', function($scope, $state, $rootScope, $timeout, toastr, cartService, authService, EVENT, userService) {
         var vm = this;
         vm.productSearchQuery = '';
         vm.loginUsername = '';
@@ -8,7 +8,13 @@ angular.module('orionEcommerceApp')
         vm.cartItemsCount = 0;
         vm.totalPrice = 0;
         vm.isAddingToCart = false;
-        vm.userName = 'Tài khoản';
+
+        vm.isAuthenticating = false;
+        vm.isRegistering = false;
+
+        if (authService.isAuthenticated()) {
+            userService.getUserProfile();
+        }
 
         vm.getTagLabelClass = function(tag) {
             switch (tag.tagName.toLocaleLowerCase()) {
@@ -28,22 +34,30 @@ angular.module('orionEcommerceApp')
         };
 
         vm.login = function(username, password) {
+
+            vm.isAuthenticating = true;
             authService.authenticate(username, password)
                 .then(function() {
+                    vm.isAuthenticating = false;
                     $('#login-modal').modal('hide');
                     toastr.success('Đăng nhập thành công');
                 }, function() {
+                    vm.isAuthenticating = false;
                     toastr.error('Đăng nhập thất bại');
                 });
         };
 
         vm.loginFacebook = function() {
+
+            vm.isAuthenticating = true;
             authService.authenticateFacebook()
                 .then(function(res) {
+                    vm.isAuthenticating = false;
                     $('#login-modal').modal('hide');
                     toastr.success('Đăng nhập thành công');
                 })
                 .catch(function(res) {
+                    vm.isAuthenticating = false;
                     toastr.error('Đăng nhập thất bại');
                 });
         };
@@ -59,11 +73,33 @@ angular.module('orionEcommerceApp')
             }
         };
 
+        vm.register = function() {
+            vm.isRegistering = true;
+            authService.register({
+                customerName: vm.registerName,
+                username: vm.registerUsername,
+                password: vm.registerPassword
+            }).then(function(res) {
+                vm.isRegistering = false;
+                toastr.success('Đăng ký thành công');
+                $('#register-modal').modal('hide');
+                authService.authenticate(vm.registerUsername, vm.registerPassword)
+                    .then(function() {
+                        toastr.success('Đăng nhập thành công');
+                    }, function() {
+                        toastr.error('Đăng nhập thất bại');
+                    });
+            }, function(res) {
+                vm.isRegistering = false;
+                toastr.error('Đăng ký thất bại');
+            });
+        };
+
         vm.getTotalCartItems = function() {
             return cartService.getTotalItems();
         };
 
-        vm.addItemToCart = function(item, quantity) {
+        vm.addItemToCart = function(item, quantity, callback) {
             vm.isAddingToCart = true;
             cartService.addItem(item, quantity)
                 .then(function(res) {
@@ -112,6 +148,13 @@ angular.module('orionEcommerceApp')
 
                     vm.isAddingToCart = false;
                     toastr.success('Thêm vào giỏ hàng thành công');
+
+                    if (callback !== undefined) {
+                        $timeout(function() {
+                            $scope.$apply();
+                        })
+                        callback();
+                    }
                 })
                 .catch(function(res) {
                     console.log(res);
@@ -122,7 +165,6 @@ angular.module('orionEcommerceApp')
         };
 
         vm.removeItemFromCart = function(id) {
-            console.log(id);
             cartService.removeItem(id)
                 .then(function(res) {
                     toastr.success('Bỏ khỏi giỏ hàng thành công');
@@ -209,23 +251,18 @@ angular.module('orionEcommerceApp')
                 });
         }
 
-        function getUserInfo() {
-            userService.getUserInfo()
-                .then(function(res) {
-                    vm.userName = res.data.customerName;
-                }, function(res) {
-                    toastr.error('Không thể lấy thông tin user');
-                });
+        vm.clearCart = function() {
+            vm.cartItems = [];
+            vm.cartItemsCount = 0;
+            vm.totalPrice = 0;
+            cartService.clearLocal();
         }
 
         getCartItems();
 
-        if (authService.isAuthenticated()) {
-            getUserInfo();
-        }
+        $rootScope.addItemToCart = vm.addItemToCart;
 
         $rootScope.$on(EVENT.AUTH_SUCCESS, function(event, data) {
-            getUserInfo();
             var backup = vm.cartItems;
             vm.cartItems = [];
             vm.cartItemsCount = 0;
@@ -236,14 +273,19 @@ angular.module('orionEcommerceApp')
             backup.forEach(function(item) {
                 vm.addItemToCart(item, item.quantity);
             });
+
+            cartService.clearLocal();
         });
 
+        $rootScope.$on(EVENT.CHECKOUT_FINISH, function(event, data) {
+            vm.clearCart();
+        })
+
         $rootScope.$on(EVENT.LOGOUT, function(event, data) {
-            vm.userName = 'Tài khoản';
-            vm.cartItems = [];
-            vm.cartItemsCount = 0;
-            vm.totalPrice = 0;
-            cartService.clearLocal();
+            vm.clearCart();
+            delete $rootScope.userProfile;
+            delete $rootScope.userProfileTemp;
+            delete $rootScope.bill;
         });
 
     });
